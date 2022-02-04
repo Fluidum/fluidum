@@ -13,19 +13,37 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "DebugContract",
+      name: "FluidumContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.DebugContract__factory>;
+    ): Promise<Contracts.FluidumContract__factory>;
+    getContractFactory(
+      name: "FluidumContract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FluidumContract__factory>;
+    getContractFactory(
+      name: "FluidumContract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FluidumContract__factory>;
     getContractFactory(
       name: "TestContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestContract__factory>;
 
     getContractAt(
-      name: "DebugContract",
+      name: "FluidumContract",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.DebugContract>;
+    ): Promise<Contracts.FluidumContract>;
+    getContractAt(
+      name: "FluidumContract",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FluidumContract>;
+    getContractAt(
+      name: "FluidumContract",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FluidumContract>;
     getContractAt(
       name: "TestContract",
       address: string,

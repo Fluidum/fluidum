@@ -54,7 +54,7 @@ export class DebugContractComponent implements AfterViewInit {
   events:Array<any> = [];
   eventsAbiArray:Array<any> = [];
   isChainReady = false;
-  blockchain_is_busy = true;
+
 
   newWallet!: ethers.Wallet;
 
@@ -170,14 +170,14 @@ export class DebugContractComponent implements AfterViewInit {
     try {
   
 
-      this.deployer_address =
-        await this.onChainService.myProvider.Signer.getAddress();
+      this.deployer_address = 'deployer address'
+       // await this.onChainService.myProvider.Signer.getAddress();
 
       this.onChainService.myProvider.blockEventSubscription.subscribe(
         async (blockNr) => {
           this.onChainService.testContract.refreshBalance();
           this.onChainService.newWallet.refreshWalletBalance();
-          this.blockchain_is_busy = false;
+          this.onChainService.isbusySubject.next(false)
           const block =
             await this.onChainService.myProvider.Provider.getBlockWithTransactions(
               blockNr
@@ -264,7 +264,7 @@ export class DebugContractComponent implements AfterViewInit {
   }
 
   async doFaucet() {
-    this.blockchain_is_busy = true;
+    this.onChainService.isbusySubject.next(true)
     let amountInEther = '0.01';
     // Create a transaction object
     let tx = {
@@ -275,15 +275,16 @@ export class DebugContractComponent implements AfterViewInit {
     // Send a transaction
     const transaction_result =
       await this.onChainService.myProvider.doTransaction(tx);
-    this.blockchain_is_busy = false;
+      this.onChainService.isbusySubject.next(false)
     await this.notifierService.showNotificationTransaction(transaction_result);
   }
 
   async openTransaction() {
-    this.blockchain_is_busy = true;
+   
     const res = await this.dialogService.openDialog();
 
     if (res && res.type == 'transaction') {
+      this.onChainService.isbusySubject.next(true)
       const usd = res.amount;
       const amountInEther = convertUSDtoEther(
         res.amount,
@@ -299,12 +300,12 @@ export class DebugContractComponent implements AfterViewInit {
 
       const transaction_result =
         await this.onChainService.newWallet.doTransaction(tx);
-      this.blockchain_is_busy = false;
+        this.onChainService.isbusySubject.next(false)
       await this.notifierService.showNotificationTransaction(
         transaction_result
       );
     } else {
-    this.blockchain_is_busy = false;
+  
     }
   }
 

@@ -13,8 +13,8 @@ export class OnChainService {
   myProvider!: AngularNetworkProvider;
   newWallet!: AngularWallet;
   testContract!: AngularContract;
-  public isChainReady: ReplaySubject<boolean>=
-  new ReplaySubject(1);
+  public isChainReady: ReplaySubject<boolean>= new ReplaySubject(1);
+  public isbusySubject: ReplaySubject<boolean>= new ReplaySubject(1);
   constructor( @Inject('testContractMetadata') public testContractMetadata:ICONTRACT
  ) { }
 
@@ -46,7 +46,7 @@ export class OnChainService {
   }
 
   async init(){
-    this.myProvider = new AngularNetworkProvider([]);
+    this.myProvider = new AngularNetworkProvider(['https://kovan.infura.io/v3/212d29e8e6d145d78a350b2971f326be']);
     await this.myProvider .init()
     await this.myProvider .initBlockSubscription()
     this.newWallet = new  AngularWallet()
@@ -54,5 +54,6 @@ export class OnChainService {
     this.testContract=  new AngularContract(this.testContractMetadata)
     await this.testContract.init(this.myProvider.Provider,mywallet)
     this.isChainReady.next(true)
+    this.isbusySubject.next(false)
   }
 }

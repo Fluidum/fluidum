@@ -13,6 +13,7 @@ import { blockchain_imports, blockchain_providers } from './blockchain_wiring';
 import { OnChainService } from './on-chain.service';
 
 import { DebugContractModule } from './debug-contract/debug-contract.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DebugContractModule } from './debug-contract/debug-contract.module';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    DebugContractModule
+    DebugContractModule,
+    MatProgressSpinnerModule
   ],
   providers: [  ...blockchain_providers, OnChainService ],
   bootstrap: [AppComponent]

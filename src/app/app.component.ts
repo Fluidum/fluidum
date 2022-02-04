@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
     //   index:2,
     // },
   ];
+  isBusy: boolean = true;
 
   constructor(public onChainService: OnChainService) {}
 
@@ -33,5 +34,8 @@ export class AppComponent implements OnInit {
   }
   async onChainStuff() {
     await this.onChainService.init();
+    this.onChainService.isbusySubject.subscribe(isBusy=> {
+      this.isBusy = isBusy
+    })
   }
 }

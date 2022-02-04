@@ -54,7 +54,7 @@ export class DebugComponent implements AfterViewInit {
   events:Array<any> = [];
   eventsAbiArray:Array<any> = [];
 
-  blockchain_is_busy = true;
+
 
   newWallet!: ethers.Wallet;
 

@@ -1,5 +1,4 @@
 <mat-toolbar class="mat-elevation-z6" color="primary">
-
   <span>Fluidum</span>
   <span class="example-spacer"></span>
   <button
@@ -10,23 +9,16 @@
     <mat-icon>link</mat-icon>
   </button>
 
-  <button
-  mat-button
-  class="example-icon"
-  aria-label="Github"
->
-<a  href="https://github.com/Fluidum/fluidum">
-<img style=" vertical-align: middle;
-margin-right: 5px;
-margin-bottom: 4px;"
-src="assets/images/github-circle-white-transparent.svg"
-alt="angular"
-class=""
-/><span style="color:white;">GitHub</span>
-</a>
-</button>
-
-
+  <button mat-button class="example-icon" aria-label="Github">
+    <a href="https://github.com/Fluidum/fluidum">
+      <img
+        style="vertical-align: middle; margin-right: 5px; margin-bottom: 4px"
+        src="assets/images/github-circle-white-transparent.svg"
+        alt="angular"
+        class=""
+      /><span style="color: white">GitHub</span>
+    </a>
+  </button>
 </mat-toolbar>
 
 <nav mat-align-tabs="center" mat-tab-nav-bar>
@@ -41,3 +33,17 @@ class=""
   </a>
 </nav>
 <router-outlet></router-outlet>
+
+<div *ngIf="isBusy"
+  style="
+    z-index: 1000000;
+    background: #00000070;
+    text-align: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;align-items: center;
+    top: 0;display: flex;justify-content: center;
+  "
+>
+  <mat-spinner  color="warn"></mat-spinner>
+</div>
