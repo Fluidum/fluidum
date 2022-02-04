@@ -21,31 +21,37 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface TestContractInterface extends ethers.utils.Interface {
   functions: {
-    "calculate(uint256,uint256)": FunctionFragment;
-    "greet()": FunctionFragment;
-    "setGreeting(string)": FunctionFragment;
+    "isCancelled(uint256)": FunctionFragment;
+    "onboarding(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "calculate",
-    values: [BigNumberish, BigNumberish]
+    functionFragment: "isCancelled",
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "greet", values?: undefined): string;
-  encodeFunctionData(functionFragment: "setGreeting", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "onboarding",
+    values: [BigNumberish]
+  ): string;
 
-  decodeFunctionResult(functionFragment: "calculate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "greet", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setGreeting",
+    functionFragment: "isCancelled",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "onboarding", data: BytesLike): Result;
 
   events: {
+    "DiceRolled(bytes32,address)": EventFragment;
     "ValueChangedEvent(uint256)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "DiceRolled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ValueChangedEvent"): EventFragment;
 }
+
+export type DiceRolledEvent = TypedEvent<
+  [string, string] & { requestId: string; roller: string }
+>;
 
 export type ValueChangedEventEvent = TypedEvent<
   [BigNumber] & { value: BigNumber }
@@ -95,46 +101,53 @@ export class TestContract extends BaseContract {
   interface: TestContractInterface;
 
   functions: {
-    calculate(
-      number1: BigNumberish,
-      number2: BigNumberish,
+    isCancelled(
+      timestamp: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[boolean]>;
 
-    greet(overrides?: CallOverrides): Promise<[string]>;
-
-    setGreeting(
-      _greeting: string,
+    onboarding(
+      phone: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
-  calculate(
-    number1: BigNumberish,
-    number2: BigNumberish,
+  isCancelled(
+    timestamp: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<boolean>;
 
-  greet(overrides?: CallOverrides): Promise<string>;
-
-  setGreeting(
-    _greeting: string,
+  onboarding(
+    phone: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    calculate(
-      number1: BigNumberish,
-      number2: BigNumberish,
+    isCancelled(
+      timestamp: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<boolean>;
 
-    greet(overrides?: CallOverrides): Promise<string>;
-
-    setGreeting(_greeting: string, overrides?: CallOverrides): Promise<void>;
+    onboarding(phone: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
+    "DiceRolled(bytes32,address)"(
+      requestId?: BytesLike | null,
+      roller?: string | null
+    ): TypedEventFilter<
+      [string, string],
+      { requestId: string; roller: string }
+    >;
+
+    DiceRolled(
+      requestId?: BytesLike | null,
+      roller?: string | null
+    ): TypedEventFilter<
+      [string, string],
+      { requestId: string; roller: string }
+    >;
+
     "ValueChangedEvent(uint256)"(
       value?: null
     ): TypedEventFilter<[BigNumber], { value: BigNumber }>;
@@ -145,31 +158,25 @@ export class TestContract extends BaseContract {
   };
 
   estimateGas: {
-    calculate(
-      number1: BigNumberish,
-      number2: BigNumberish,
+    isCancelled(
+      timestamp: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    greet(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setGreeting(
-      _greeting: string,
+    onboarding(
+      phone: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    calculate(
-      number1: BigNumberish,
-      number2: BigNumberish,
+    isCancelled(
+      timestamp: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    greet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setGreeting(
-      _greeting: string,
+    onboarding(
+      phone: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -46,7 +46,7 @@ export class OnChainService {
   }
 
   async init(){
-    this.myProvider = new AngularNetworkProvider(['https://kovan.infura.io/v3/212d29e8e6d145d78a350b2971f326be']);
+    this.myProvider = new AngularNetworkProvider([])//(['https://kovan.infura.io/v3/212d29e8e6d145d78a350b2971f326be']);
     await this.myProvider .init()
     await this.myProvider .initBlockSubscription()
     this.newWallet = new  AngularWallet()
