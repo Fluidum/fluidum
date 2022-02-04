@@ -1,0 +1,10 @@
+{
+    "testContract": {
+        "name": "TestContract",
+        "artifactsPath": "TestContract.sol/TestContract.json",
+        "jsonName": "test_contract",
+        "ctor": [
+            "hello roadweb3"
+        ]
+    }
+}

@@ -1,27 +1,98 @@
 # Fluidum
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
+Fluidum, a Dapp Hackaton project which aims to create the right tool to engage mass adoption of money streaming by providing users the ability to stream money to phone numbers
 
-## Development server
+## Major building blocks and challenges
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1) Phone Identification, association with blockchain address
+   - Creation of random password (vrf Chainlink)
+   - Custom chainlink adapter posting to sms provider the random password
+   - Encrypted password validate period 5 minutes
+   - Store address=> phone number on chain
+   
+2) Leverage Superfluid for money transfer
+   - Stable coin as supertoken
+   - Establishing maximal and minimal accepted deviation of exchange variation 
 
-## Code scaffolding
+3) Dapp in Angular frontend with components:
+   - Phone Identificition
+   - Stream into to checkout
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# 🏄‍♂️ Quick Start
 
-## Build
+## localhost (for now)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```javascript
+npm run chain  
+// spin blockhain node on localhost creating 10 accounts and privatekeys
+```
 
-## Running unit tests
+```javascript
+npm run watch-contract
+// launch compile and deploy in watch mode.
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```javascript
+ng serve -o
+// build app and serve on localhost:4200
+```
 
-## Running end-to-end tests
+### other helpful commands
+```javascript
+npm run compile
+// compile contracts
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```javascript
+npm run deploy
+// deploy contract to localhost
+```
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## testnet/livenet
+Either deploying to localhost node or testnet/cloud the conract has to be compiled
+
+```javascript
+npm run compile 
+// compile the demo app contract in hardhat/contracts/demoContract.sol
+```
+When compiling, the contract artifacts will be created in the angular project assets folder. 
+
+
+🔏 You can edit your smart contract `.sol` in `/hardhat/contracts` and recompile with same command 
+
+Now is time to deploy our contract
+
+```javascript
+npm run deploy
+// deploy the smartcontract to the chosen network.
+```
+ If you want to deploy to a testnet/mainnet the api and private key have to be configured within hardhat/hardhat.config.ts
+
+
+💼 You can edit your deployment scripts in `/hardhat/deploy`  
+ &nbsp;  
+ 
+Developping in the hardhat network it may be useful to use watch hooks for compiling and deploying, if this is required you can avoid the commands 'compile' and 'deploy' and run in watch mode  
+```javascript
+npm run watch-contract
+// launch compile and deploy in watch mode.
+```
+☠️☠️☠️ Don't do watch mode in mainnet  
+⚠️⚠️⚠️ Take care watching in the testnet, test ether is free but you are required to have some  
+ &nbsp;  
+ **Testing Solidity Contracts**
+ The schematics also include the hardhat test configuratio and infrastructure for solidity contract testing  
+ &nbsp;
+
+
+```javascript
+npm run contracts:test
+// run the contract tests
+```
+```javascript
+npm run contracts:coverage
+// Contracts solidity test coverage analysis
+```
+
+&nbsp;
