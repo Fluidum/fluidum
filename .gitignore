@@ -1,5 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 /hardhat/.env
+/hardhat/cache
+/src/assets/artifacts*
 
 # Compiled output
 /dist
