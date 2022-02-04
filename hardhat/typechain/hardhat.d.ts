@@ -48,6 +48,14 @@ declare module "hardhat/types/runtime" {
       name: "TestContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestContract__factory>;
+    getContractFactory(
+      name: "TestContract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TestContract__factory>;
+    getContractFactory(
+      name: "UserRegistration",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserRegistration__factory>;
 
     getContractAt(
       name: "ConfirmedOwner",
@@ -94,6 +102,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.TestContract>;
+    getContractAt(
+      name: "TestContract",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TestContract>;
+    getContractAt(
+      name: "UserRegistration",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserRegistration>;
 
     // default types
     getContractFactory(
