@@ -20,10 +20,6 @@ declare module "hardhat/types/runtime" {
       name: "Fluidum",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Fluidum__factory>;
-    getContractFactory(
-      name: "TestContract",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TestContract__factory>;
 
     getContractAt(
       name: "Ownable",
@@ -35,11 +31,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Fluidum>;
-    getContractAt(
-      name: "TestContract",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.TestContract>;
 
     // default types
     getContractFactory(

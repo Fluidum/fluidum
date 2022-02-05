@@ -3,8 +3,6 @@
 /* eslint-disable */
 export type { Ownable } from "./Ownable";
 export type { Fluidum } from "./Fluidum";
-export type { TestContract } from "./TestContract";
 
 export { Ownable__factory } from "./factories/Ownable__factory";
 export { Fluidum__factory } from "./factories/Fluidum__factory";
-export { TestContract__factory } from "./factories/TestContract__factory";
