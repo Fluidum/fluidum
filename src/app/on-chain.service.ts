@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { Inject, Injectable } from '@angular/core';
 import {
   AngularContract,
@@ -17,7 +18,11 @@ export class OnChainService {
   myProvider!: AngularNetworkProvider;
   newWallet!: AngularWallet;
   fluidumContract!: AngularContract;
-  public isChainReady: ReplaySubject< {active:boolean, wallet?:AngularWallet, provider?:AngularNetworkProvider}> = new ReplaySubject(1);
+  public isChainReady: ReplaySubject<{
+    active: boolean;
+    wallet?: AngularWallet;
+    provider?: AngularNetworkProvider;
+  }> = new ReplaySubject(1);
   public isbusySubject: ReplaySubject<boolean> = new ReplaySubject(1);
   constructor(
     @Inject('fluidumContractMetadata') public fluidumContractMetadata: ICONTRACT
@@ -48,15 +53,25 @@ export class OnChainService {
   }
 
   async init() {
-    this.myProvider = new AngularNetworkProvider([]); //(['https://kovan.infura.io/v3/212d29e8e6d145d78a350b2971f326be']);
+    const currentPrivateKey = environment.privKey;
+    if (currentPrivateKey) {
+      this.myProvider = new AngularNetworkProvider([
+        `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
+      ]);
+    } else {
+      this.myProvider = new AngularNetworkProvider([]);
+    }
     await this.myProvider.init();
     await this.myProvider.initBlockSubscription();
     this.newWallet = new AngularWallet();
     const mywallet = await this.newWallet.init(this.myProvider.Provider);
     this.fluidumContract = new AngularContract(this.fluidumContractMetadata);
     await this.fluidumContract.init(this.myProvider.Provider, mywallet);
-    this.isChainReady.next({active:true, provider: this.myProvider, wallet: this.newWallet});
+    this.isChainReady.next({
+      active: true,
+      provider: this.myProvider,
+      wallet: this.newWallet,
+    });
     this.isbusySubject.next(false);
-
   }
 }

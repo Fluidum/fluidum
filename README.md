@@ -38,7 +38,9 @@ npm run watch-contract mumbai
 
 ```javascript
 ng serve -o
-// build app and serve on localhost:4200
+// build app and serve on localhost:4200. Alternatively, run
+ng serve -o -c mumbai
+// to use your configured Mumbai testnet wallet
 ```
 
 ### other helpful commands

@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Wallet } from 'ethers';
@@ -18,7 +19,7 @@ export class AngularWallet {
   }
   async refreshWalletBalance() {
     const weiBalance = await this._myWallet.getBalance();
-    console.log(weiBalance)
+    console.log(weiBalance);
     this.walletBalanceSubscription.next(weiBalance);
   }
 
@@ -89,7 +90,10 @@ export class AngularWallet {
   async init(provider: JsonRpcProvider) {
     if (this._myWallet == undefined) {
       let wallet: Wallet;
-      const currentPrivateKey = window.localStorage.getItem('metaPrivateKey');
+      let currentPrivateKey = environment.privKey;
+      if (!currentPrivateKey)
+        currentPrivateKey = window.localStorage.getItem('metaPrivateKey');
+
       if (currentPrivateKey) {
         wallet = new Wallet(currentPrivateKey);
       } else {

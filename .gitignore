@@ -1,5 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-/hardhat/.env
+*.env*
 /hardhat/cache
 /hardhat/typechain
 /src/assets/artifacts*
@@ -40,6 +40,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+/src/environments/environment.mumbai.ts
 
 # System files
 .DS_Store
