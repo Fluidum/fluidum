@@ -17,7 +17,7 @@ export class OnChainService {
   myProvider!: AngularNetworkProvider;
   newWallet!: AngularWallet;
   fluidumContract!: AngularContract;
-  public isChainReady: ReplaySubject<boolean> = new ReplaySubject(1);
+  public isChainReady: ReplaySubject< {active:boolean, wallet?:AngularWallet, provider?:AngularNetworkProvider}> = new ReplaySubject(1);
   public isbusySubject: ReplaySubject<boolean> = new ReplaySubject(1);
   constructor(
     @Inject('fluidumContractMetadata') public fluidumContractMetadata: ICONTRACT
@@ -55,7 +55,8 @@ export class OnChainService {
     const mywallet = await this.newWallet.init(this.myProvider.Provider);
     this.fluidumContract = new AngularContract(this.fluidumContractMetadata);
     await this.fluidumContract.init(this.myProvider.Provider, mywallet);
-    this.isChainReady.next(true);
+    this.isChainReady.next({active:true, provider: this.myProvider, wallet: this.newWallet});
     this.isbusySubject.next(false);
+
   }
 }

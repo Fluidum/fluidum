@@ -4,3 +4,4 @@ export * from './contract-show';
 export * from './blockchain';
 export * from './dialog';
 export * from './notifier'
+export * from './wallet/wallet-display.component'

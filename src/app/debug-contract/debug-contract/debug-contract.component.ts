@@ -301,7 +301,7 @@ export class DebugContractComponent implements AfterViewInit {
     this.onChainService.isChainReady.subscribe(async (isReady) => {
       console.log(isReady);
       if (!!isReady) {
-        this.isChainReady = isReady;
+        this.isChainReady = isReady.active;
         if (this.isChainReady == true) {
           this.contract_abi = this.onChainService.fluidumContract.metadata.abi;
           console.log(this.contract_abi);
