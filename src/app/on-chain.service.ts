@@ -55,7 +55,7 @@ export class OnChainService {
         `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
       ]);
     } else {
-      this.myProvider = new AngularNetworkProvider([]);
+      this.myProvider = new AngularNetworkProvider(['https://polygon-mumbai.g.alchemy.com/v2/P2lEQkjFdNjdN0M_mpZKB8r3fAa2M0vT']);
     }
     await this.myProvider.init();
     await this.myProvider.initBlockSubscription();
