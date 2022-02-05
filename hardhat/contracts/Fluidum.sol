@@ -1,7 +1,9 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-contract UserRegistration {
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Fluidum is Ownable {
     uint256 private constant pendingRegistrationValidityPeriod = 5 minutes;
     mapping(bytes32 => address) private _usersByPhoneNumber;
     mapping(bytes32 => PendingRegistration)
@@ -26,7 +28,7 @@ contract UserRegistration {
         address newUserAddress,
         bytes32 codeHash,
         bytes32 phoneNumberHash
-    ) public {
+    ) public onlyOwner {
         require(newUserAddress == address(newUserAddress), "Invalid address");
         //TODO verify that newUserAddress is indeed owned by someone by checking signature
         require(
@@ -53,7 +55,10 @@ contract UserRegistration {
      * @param code plaintext verification code sent via SMS
      * @param phoneNumberHash hash of the phone number
      */
-    function finishVerification(uint256 code, bytes32 phoneNumberHash) public {
+    function finishVerification(uint256 code, bytes32 phoneNumberHash)
+        public
+        onlyOwner
+    {
         //TODO verify sender's or meta-transaction sender's signature
         //TODO replace msg.sender with address recovered from meta-transaction
         require(
