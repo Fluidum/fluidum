@@ -48,6 +48,13 @@ contract Fluidum {
         });
     }
 
+    function mockRegistration(address newUserAddress, bytes32 phoneNumberHash)
+        public
+    {
+        _usersByPhoneNumber[phoneNumberHash] = newUserAddress;
+        _phoneNumbersByUser[newUserAddress] = phoneNumberHash;
+    }
+
     /**
      * @notice Finishes verification process
      *
