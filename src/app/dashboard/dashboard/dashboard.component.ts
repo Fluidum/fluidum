@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.address = await this.wallet.getAddress();
     const result=
       await this.contract.runFunction('checkRegistered', [this.address])
-   
+   this.registered = await( await this.contract.runFunction('checkRegistered', [this.address])).payload[0]
       console.log(result)
 
     console.log(this.registered);
