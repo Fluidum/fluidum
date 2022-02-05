@@ -8,7 +8,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-
 import { ContractInputComponent } from '../contract-input/contract-input.component';
 
 import { ethers } from 'ethers';
@@ -161,6 +160,10 @@ export class DebugContractComponent implements AfterViewInit {
   async onChainStuff() {
     try {
       this.deployer_address = 'deployer address';
+      const sf = await Framework.create({
+        networkName: 'kovan',
+        provider: this.onChainService.myProvider.Provider,
+      });
       // await this.onChainService.myProvider.Signer.getAddress();
 
       this.onChainService.myProvider.blockEventSubscription.subscribe(
