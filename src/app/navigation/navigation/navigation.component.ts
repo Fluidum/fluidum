@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularWallet } from 'angular-web3';
 import { OnChainService } from 'src/app/on-chain.service';
 
 @Component({
@@ -26,13 +27,13 @@ export class NavigationComponent implements OnInit {
     },
   ];
   connected: boolean;
-  //wallet: import("c:/Users/javie/Documents/WEB/BLOCKCHAIN/fluidum/src/app/dapp-injector/index").AngularWallet;
+  wallet: AngularWallet;
   constructor(private onChainService: OnChainService) {}
 
   ngOnInit(): void {
     this.onChainService.isChainReady.subscribe((chain) => {
       this.connected = chain.active;
-      //this.wallet = chain.wallet;
+      this.wallet = chain.wallet;
     });
   }
 }
