@@ -3,9 +3,7 @@
     padding: 0px 10px 10px;
     margin: 10px;
     border-width: 1px;
-    border-style: solid;; 
-
-    width: 300px" [style.border-color]="abi_input.stateMutability == 'payable'? 
+    border-style: solid;;" [style.border-color]="abi_input.stateMutability == 'payable'? 
     'red' : abi_input.stateMutability == 'view' ? 'green' : 'blue'" >
   <h3 style="margin-top: unset;font-weight: 500;">{{ abi_input.name }}</h3>
   <div style="padding: 15px; text-align: center;">

@@ -8,23 +8,7 @@ import { OnChainService } from './on-chain.service';
 })
 export class AppComponent implements OnInit {
   title = 'fluidum';
-  navLinks: any[] = [
-    {
-      label: 'Landing',
-      link: './home',
-      index: 0,
-    },
-    {
-      label: 'Debug Contract',
-      link: './debug',  
-      index: 1,
-    },
-    // {
-    //   label: 'Hello Contract',
-    //   link: './hello-world',
-    //   index:2,
-    // },
-  ];
+
   isBusy: boolean = true;
 
   constructor(public onChainService: OnChainService) {}

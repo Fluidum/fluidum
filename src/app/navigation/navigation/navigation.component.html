@@ -1,0 +1,36 @@
+<mat-toolbar class="mat-elevation-z6" color="primary">
+    <span>Fluidum</span>
+    <nav mat-align-tabs="center" mat-tab-nav-bar>
+      <a style="color:white;"
+        mat-tab-link
+        *ngFor="let link of navLinks"
+        [routerLink]="link.link"
+        routerLinkActive
+        #rla="routerLinkActive"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+    <span class="example-spacer"></span>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon>link</mat-icon>
+    </button>
+  
+    <button mat-button class="example-icon" aria-label="Github">
+      <a href="https://github.com/Fluidum/fluidum">
+        <img
+          style="vertical-align: middle; margin-right: 5px; margin-bottom: 4px"
+          src="assets/images/github-circle-white-transparent.svg"
+          alt="angular"
+          class=""
+        /><span style="color: white">GitHub</span>
+      </a>
+    </button>
+  
+  </mat-toolbar>
+  
+  

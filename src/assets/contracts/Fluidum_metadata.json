@@ -1,1 +1,82 @@
-{"abi":[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"inputs":[{"internalType":"uint256","name":"code","type":"uint256"},{"internalType":"bytes32","name":"phoneNumberHash","type":"bytes32"}],"name":"finishVerification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newUserAddress","type":"address"},{"internalType":"bytes32","name":"codeHash","type":"bytes32"},{"internalType":"bytes32","name":"phoneNumberHash","type":"bytes32"}],"name":"startVerification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}],"name":"Fluidum","address":"0x8F4cFD8f913478f4d7dBC8bc3eDFc20fDc21E7d4"}
+{
+  "abi": [
+    { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "code", "type": "uint256" },
+        {
+          "internalType": "bytes32",
+          "name": "phoneNumberHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "finishVerification",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newUserAddress",
+          "type": "address"
+        },
+        { "internalType": "bytes32", "name": "codeHash", "type": "bytes32" },
+        {
+          "internalType": "bytes32",
+          "name": "phoneNumberHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "startVerification",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "newOwner", "type": "address" }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "name": "Fluidum",
+  "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+}
