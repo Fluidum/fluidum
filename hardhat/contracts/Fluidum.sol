@@ -1,9 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-
-contract Fluidum is Ownable {
+contract Fluidum {
     uint256 private constant pendingRegistrationValidityPeriod = 5 minutes;
     mapping(bytes32 => address) private _usersByPhoneNumber;
     mapping(address => bytes32) private _phoneNumbersByUser;
@@ -29,7 +27,7 @@ contract Fluidum is Ownable {
         address newUserAddress,
         bytes32 codeHash,
         bytes32 phoneNumberHash
-    ) public onlyOwner {
+    ) public {
         require(newUserAddress == address(newUserAddress), "Invalid address");
         //TODO verify that newUserAddress is indeed owned by someone by checking signature
         require(
@@ -50,15 +48,21 @@ contract Fluidum is Ownable {
         });
     }
 
+    function mockRegistration(address newUserAddress, bytes32 phoneNumberHash)
+        public
+    {
+        _usersByPhoneNumber[phoneNumberHash] = newUserAddress;
+        _phoneNumbersByUser[newUserAddress] = phoneNumberHash;
+    }
+
     /**
      * @notice Finishes verification process
      *
      * @param code plaintext verification code sent via SMS
      * @param phoneNumberHash hash of the phone number
      */
-    function finishVerification(uint256 code, bytes32 phoneNumberHash)
+    function finishVerification(string memory code, bytes32 phoneNumberHash)
         public
-        onlyOwner
     {
         //TODO verify sender's or meta-transaction sender's signature
         //TODO replace msg.sender with address recovered from meta-transaction
@@ -79,7 +83,7 @@ contract Fluidum is Ownable {
         );
         //Convenient online keccak256 - https://profitplane.com/keccak256
         require(
-            keccak256(abi.encode(code)) ==
+            keccak256(abi.encodePacked(code)) ==
                 _pendingRegistrationsByPhoneNumber[phoneNumberHash].codeHash,
             "The provided code is incorrect"
         );
