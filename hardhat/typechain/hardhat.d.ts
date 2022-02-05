@@ -13,82 +13,28 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "ConfirmedOwner",
+      name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ConfirmedOwner__factory>;
+    ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
-      name: "ConfirmedOwnerWithProposal",
+      name: "Fluidum",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ConfirmedOwnerWithProposal__factory>;
-    getContractFactory(
-      name: "LinkTokenInterface",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.LinkTokenInterface__factory>;
-    getContractFactory(
-      name: "OwnableInterface",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.OwnableInterface__factory>;
-    getContractFactory(
-      name: "VRFConsumerBase",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.VRFConsumerBase__factory>;
-    getContractFactory(
-      name: "FluidumContract",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.FluidumContract__factory>;
-    getContractFactory(
-      name: "OnBoardContract",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.OnBoardContract__factory>;
-    getContractFactory(
-      name: "StreamContract",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.StreamContract__factory>;
+    ): Promise<Contracts.Fluidum__factory>;
     getContractFactory(
       name: "TestContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestContract__factory>;
 
     getContractAt(
-      name: "ConfirmedOwner",
+      name: "Ownable",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ConfirmedOwner>;
+    ): Promise<Contracts.Ownable>;
     getContractAt(
-      name: "ConfirmedOwnerWithProposal",
+      name: "Fluidum",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ConfirmedOwnerWithProposal>;
-    getContractAt(
-      name: "LinkTokenInterface",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.LinkTokenInterface>;
-    getContractAt(
-      name: "OwnableInterface",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.OwnableInterface>;
-    getContractAt(
-      name: "VRFConsumerBase",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.VRFConsumerBase>;
-    getContractAt(
-      name: "FluidumContract",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.FluidumContract>;
-    getContractAt(
-      name: "OnBoardContract",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.OnBoardContract>;
-    getContractAt(
-      name: "StreamContract",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.StreamContract>;
+    ): Promise<Contracts.Fluidum>;
     getContractAt(
       name: "TestContract",
       address: string,

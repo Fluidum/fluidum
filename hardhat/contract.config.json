@@ -1,10 +1,7 @@
 {
-    "testContract": {
-        "name": "TestContract",
-        "artifactsPath": "TestContract.sol/TestContract.json",
-        "jsonName": "test_contract",
-        "ctor": [
-            "hello roadweb3"
-        ]
-    }
+  "Fluidum": {
+    "name": "Fluidum",
+    "artifactsPath": "Fluidum.sol/Fluidum.json",
+    "jsonName": "Fluidum"
+  }
 }
