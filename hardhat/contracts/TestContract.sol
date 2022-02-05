@@ -38,6 +38,8 @@ contract TestContract {
        
     }
 
+ 
+
     function isCancelled(uint timestamp) public view returns (bool) {
         bool _cancelOnboarding = true;
         console.log(_onboarding_process[msg.sender].timestamp + 20 );

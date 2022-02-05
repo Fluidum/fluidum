@@ -15,6 +15,7 @@ export class OnChainService {
   testContract!: AngularContract;
   public isChainReady: ReplaySubject<boolean>= new ReplaySubject(1);
   public isbusySubject: ReplaySubject<boolean>= new ReplaySubject(1);
+  public blockchainOnject: ReplaySubject<{connected: boolean, wallet?:AngularWallet}>= new ReplaySubject(1);
   constructor( @Inject('testContractMetadata') public testContractMetadata:ICONTRACT
  ) { }
 

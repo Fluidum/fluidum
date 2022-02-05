@@ -14,6 +14,8 @@ import { OnChainService } from './on-chain.service';
 
 import { DebugContractModule } from './debug-contract/debug-contract.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { NavigationModule } from './navigation/navigation.module';
 
 @NgModule({
   declarations: [
@@ -28,16 +30,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
     // @dev Features modulesto Work with
     HomeModule,
+    DashboardModule,
+    NavigationModule,
+    DebugContractModule,
 
     //@dev angular-web3 infrastructure
     ...blockchain_imports,
 
     //@dev Angular materail
-    MatTabsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    DebugContractModule,
     MatProgressSpinnerModule
   ],
   providers: [  ...blockchain_providers, OnChainService ],

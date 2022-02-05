@@ -37,8 +37,8 @@
       ]
     },
     "C:\\Users\\javie\\Documents\\WEB\\BLOCKCHAIN\\fluidum\\hardhat\\contracts\\TestContract.sol": {
-      "lastModificationDate": 1643986628704,
-      "contentHash": "95cf663a71cd6321472bd7a9a1e95399",
+      "lastModificationDate": 1643990494508,
+      "contentHash": "ddc0bf7e033a27ea98cd281e376e3866",
       "sourceName": "contracts/TestContract.sol",
       "solcConfig": {
         "version": "0.8.4",
