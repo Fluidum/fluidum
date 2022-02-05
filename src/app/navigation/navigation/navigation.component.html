@@ -20,6 +20,8 @@
       <mat-icon>link</mat-icon>
     </button>
   
+    <wallet-display *ngIf="connected == true" [myWallet]="wallet" ></wallet-display>
+
     <button mat-button class="example-icon" aria-label="Github">
       <a href="https://github.com/Fluidum/fluidum">
         <img

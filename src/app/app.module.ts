@@ -17,9 +17,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NavigationModule } from './navigation/navigation.module';
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
      //@dev AngularCore
@@ -38,7 +39,8 @@ import { NavigationModule } from './navigation/navigation.module';
     ...blockchain_imports,
 
     //@dev Angular materail
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+  
   ],
   providers: [  ...blockchain_providers, OnChainService ],
   bootstrap: [AppComponent]

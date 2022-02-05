@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { WalletdisplaytModule } from '../dapp-injector/components/wallet/wallet-displau.module';
 
 
 
@@ -16,6 +17,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+
+    WalletdisplaytModule,
 
     MatTabsModule,
     MatToolbarModule,

@@ -18,6 +18,7 @@ export class AngularWallet {
   }
   async refreshWalletBalance() {
     const weiBalance = await this._myWallet.getBalance();
+    console.log(weiBalance)
     this.walletBalanceSubscription.next(weiBalance);
   }
 
