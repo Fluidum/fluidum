@@ -3,7 +3,7 @@ const { exec } = require("child_process");
 
 const run = (network) => {
   console.log("🛠  Compiling & Deploying...");
-  let networkArg = network.isNotEmpty ? `:${network}` : "";
+  let networkArg = network && network.isNotEmpty ? `:${network}` : "";
   exec(`npm run deploy${networkArg}`, function (error, stdout, stderr) {
     console.log(stdout);
     if (error) console.log(error);
