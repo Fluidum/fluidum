@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularWallet } from 'angular-web3';
+import { Subject, takeUntil } from 'rxjs';
 import { OnChainService } from 'src/app/on-chain.service';
 
 @Component({
@@ -6,7 +8,7 @@ import { OnChainService } from 'src/app/on-chain.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy {
   navLinks: any[] = [
     {
       label: 'Landing',
@@ -25,14 +27,21 @@ export class NavigationComponent implements OnInit {
       index: 5,
     },
   ];
+  private ngUnsubscribe: Subject<void> = new Subject();
   connected: boolean;
-  //wallet: import("c:/Users/javie/Documents/WEB/BLOCKCHAIN/fluidum/src/app/dapp-injector/index").AngularWallet;
+  wallet: AngularWallet;
   constructor(private onChainService: OnChainService) {}
 
   ngOnInit(): void {
-    this.onChainService.isChainReady.subscribe((chain) => {
+    this.onChainService.isChainReady.pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe((chain) => {
       this.connected = chain.active;
-      //this.wallet = chain.wallet;
+      this.wallet = chain.wallet;
     });
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
+}
 }

@@ -8,8 +8,17 @@ import { ITRANSACTION_DETAILS, ITRANSACTION_RESULT } from '../models';
 @Injectable()
 export class AngularWallet {
   _myWallet!: Wallet;
+  private _address!:string;
   public walletBalanceSubscription: ReplaySubject<any> = new ReplaySubject(1);
   constructor() {}
+
+
+  async getAddress() {
+    if (this._address === undefined) {
+      this._address = await this._myWallet.getAddress()
+    }
+    return this._address
+  }
 
   get wallet() {
     if (this._myWallet == undefined) {
@@ -19,7 +28,6 @@ export class AngularWallet {
   }
   async refreshWalletBalance() {
     const weiBalance = await this._myWallet.getBalance();
-    console.log(weiBalance);
     this.walletBalanceSubscription.next(weiBalance);
   }
 

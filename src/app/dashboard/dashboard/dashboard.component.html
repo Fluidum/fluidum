@@ -1,52 +1,66 @@
 <div class="container mt-4">
-  <!-- <div class="row">
-    <div class="col bg-success">.col</div>
-    <div class="col-6 bg-warning">.col-6</div>
-    <div class="col bg-success">.col</div>
-  </div> -->
+
   <div class="row justify-content-md-center">
     <div class="jumbotron bg-light col-6">
       <h1 class="display-4">Hi Streamer!</h1>
-      <p class="lead">We are happy that you step by, here you can sart</p>
+      <p class="lead">We are happy that you step by!!</p>
       <hr class="my-4" />
       <div *ngIf="connected == false; else iamconnected">
-        <p>
-         Connect your wallet 
-        </p>
+        <p>Connect your wallet</p>
         <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button"
-            >conect</a
-          >
+          <a class="btn btn-primary btn-lg" href="#" role="button">conect</a>
         </p>
       </div>
       <ng-template #iamconnected>
-        <div >
-          <p>
-           You are connected, please see your active streams
-          </p>
+        <div *ngIf="registered == true">
+          <p>You are connected, please see your active streams</p>
+          <!-- Example split danger button -->
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Actions </span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" [routerLink]="['create-stream']" 
+                >Create a stream</a
+              >
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </div>
+          <p>your streams</p>
+        </div>
 
+        <div *ngIf="registered == false">
+          <p>Plase input your phone number and start the onboarding process</p>
+          <div class="form-group">
+            <input
+              [class.has-error]="phoneNumberCtrl.invalid"
+              [formControl]="phoneNumberCtrl"
+              type="number"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Phone Number?"
+            />
+          </div>
+          <button
+            [disabled]="phoneNumberCtrl.invalid"
+            [class]="phoneNumberCtrl.invalid ? 'btn-secondary' : 'btn-success'"
+            (click)="startVerification()"
+            type="button"
+            class="btn mt-2"
+          >
+            On Board -->
+          </button>
         </div>
       </ng-template>
-      <!-- Example split danger button -->
-      <div class="btn-group">
-        <button type="button" class="btn btn-danger">Action</button>
-        <button
-          type="button"
-          class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </div>
     </div>
   </div>
 </div>
