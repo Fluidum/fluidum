@@ -160,10 +160,7 @@ export class DebugContractComponent implements AfterViewInit {
   async onChainStuff() {
     try {
       this.deployer_address = 'deployer address';
-      const sf = await Framework.create({
-        networkName: 'kovan',
-        provider: this.onChainService.myProvider.Provider,
-      });
+
       // await this.onChainService.myProvider.Signer.getAddress();
 
       this.onChainService.myProvider.blockEventSubscription.subscribe(
