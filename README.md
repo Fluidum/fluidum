@@ -31,7 +31,9 @@ npm run chain
 
 ```javascript
 npm run watch-contract
-// launch compile and deploy in watch mode.
+// launch, compile, and deploy in watch mode. To deploy on Polygon Testnet, run
+npm run watch-contract mumbai
+// Mumbai deployment requires free Moralis account
 ```
 
 ```javascript
@@ -48,7 +50,9 @@ npm run compile
 
 ```javascript
 npm run deploy
-// deploy contract to localhost
+// deploy contract to localhost. Alternatively you can run
+npm run deploy:mumbai
+// to deploy on Polygon Testnet
 ```
 
 ## testnet/livenet

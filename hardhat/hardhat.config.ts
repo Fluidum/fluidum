@@ -107,6 +107,10 @@ const config: HardhatUserConfig = {
 
       accounts: [process.env.PRIV_KEY],
     },
+    mumbai: {
+      url: `https://speedy-nodes-nyc.moralis.io/${process.env.MORALIS_ID}/polygon/mumbai`, // <---- YOUR MORALIS ID! (not limited to infura)
+      accounts: [process.env.PRIV_KEY],
+    },
   },
   // gasReporter: {
   //   enabled: process.env.REPORT_GAS !== undefined,

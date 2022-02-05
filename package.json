@@ -15,6 +15,7 @@
     "deploy:ropsten": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/deploy.ts --network ropsten",
     "deploy:kovan": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/deploy.ts --network kovan",
     "deploy:goerli": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/deploy.ts --network goerli",
+    "deploy:mumbai": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/deploy.ts --network mumbai",
     "contracts:test": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json test",
     "contracts:coverage": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json coverage",
     "watch-contract": "cd hardhat && node scripts/helpers/watch.js",
