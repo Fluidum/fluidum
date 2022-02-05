@@ -12,7 +12,7 @@ export class AngularWallet {
 
   get wallet() {
     if (this._myWallet == undefined) {
-      throw new Error('Wallwt not yet initialized');
+      throw new Error('Wallet not yet initialized');
     }
     return this._myWallet;
   }
@@ -21,18 +21,18 @@ export class AngularWallet {
     this.walletBalanceSubscription.next(weiBalance);
   }
 
-  async doTransaction(tx:any) {
-    let notification_message:ITRANSACTION_RESULT = {
-      success: false
-    }
+  async doTransaction(tx: any) {
+    let notification_message: ITRANSACTION_RESULT = {
+      success: false,
+    };
 
-    let transaction_details:ITRANSACTION_DETAILS = {
-      txhash: "",
+    let transaction_details: ITRANSACTION_DETAILS = {
+      txhash: '',
       bknr: 0,
-      from: "",
-      gas: "",
-      to: "",
-      value: "",
+      from: '',
+      gas: '',
+      to: '',
+      value: '',
     };
 
     try {
@@ -45,15 +45,15 @@ export class AngularWallet {
       transaction_details.txhash = result.transactionHash;
       transaction_details.from = result.from;
       transaction_details.to = result.to;
-      transaction_details.gas = (result.gasUsed).toString();
+      transaction_details.gas = result.gasUsed.toString();
       transaction_details.bknr = result.blockNumber;
 
       tx_obj.value == undefined
         ? (transaction_details.value = '0')
         : (transaction_details.value = tx_obj.value.toString());
-        notification_message.success = true;
-        notification_message.success_result = transaction_details;
-    } catch (e:any) {
+      notification_message.success = true;
+      notification_message.success_result = transaction_details;
+    } catch (e: any) {
       // console.log(e);
       // Accounts for Metamask and default signer on all networks
       let myMessage =
@@ -81,13 +81,11 @@ export class AngularWallet {
       }
 
       notification_message.error_message = myMessage;
-     
-    
     }
-    return notification_message
-     }
+    return notification_message;
+  }
 
-  async init(provider:JsonRpcProvider) {
+  async init(provider: JsonRpcProvider) {
     if (this._myWallet == undefined) {
       let wallet: Wallet;
       const currentPrivateKey = window.localStorage.getItem('metaPrivateKey');
