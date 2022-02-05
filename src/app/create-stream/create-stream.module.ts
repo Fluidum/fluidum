@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateStreamComponent } from './create-stream/create-stream.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    CreateStreamComponent
   ],
   imports: [
     CommonModule,
@@ -16,8 +16,6 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     RouterModule
   ],
-  exports: [
-    DashboardComponent
-  ]
+
 })
-export class DashboardModule { }
+export class CreateStreamModule { }
