@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{"abi":[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"addressToCheck","type":"address"}],"name":"checkRegistered","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"code","type":"string"},{"internalType":"bytes32","name":"phoneNumberHash","type":"bytes32"}],"name":"finishVerification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newUserAddress","type":"address"},{"internalType":"bytes32","name":"phoneNumberHash","type":"bytes32"}],"name":"mockRegistration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newUserAddress","type":"address"},{"internalType":"bytes32","name":"codeHash","type":"bytes32"},{"internalType":"bytes32","name":"phoneNumberHash","type":"bytes32"}],"name":"startVerification","outputs":[],"stateMutability":"nonpayable","type":"function"}],"name":"Fluidum","address":"0xcbD4eD4eE8D08f2A8f3ac7420abaC93d95Eee0fF"}
-=======
 {
   "abi": [
     {
@@ -49,14 +46,34 @@
           "name": "_agreementClass",
           "type": "address"
         },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "_ctx", "type": "bytes" }
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_ctx",
+          "type": "bytes"
+        }
       ],
       "name": "afterAgreementCreated",
       "outputs": [
-        { "internalType": "bytes", "name": "newCtx", "type": "bytes" }
+        {
+          "internalType": "bytes",
+          "name": "newCtx",
+          "type": "bytes"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -68,14 +85,40 @@
           "name": "",
           "type": "address"
         },
-        { "internalType": "address", "name": "", "type": "address" },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" }
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
       ],
       "name": "afterAgreementTerminated",
-      "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -91,14 +134,34 @@
           "name": "_agreementClass",
           "type": "address"
         },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "_ctx", "type": "bytes" }
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_ctx",
+          "type": "bytes"
+        }
       ],
       "name": "afterAgreementUpdated",
       "outputs": [
-        { "internalType": "bytes", "name": "newCtx", "type": "bytes" }
+        {
+          "internalType": "bytes",
+          "name": "newCtx",
+          "type": "bytes"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -110,13 +173,35 @@
           "name": "",
           "type": "address"
         },
-        { "internalType": "address", "name": "", "type": "address" },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" }
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
       ],
       "name": "beforeAgreementCreated",
-      "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
       "stateMutability": "view",
       "type": "function"
     },
@@ -127,13 +212,35 @@
           "name": "",
           "type": "address"
         },
-        { "internalType": "address", "name": "", "type": "address" },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" }
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
       ],
       "name": "beforeAgreementTerminated",
-      "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
       "stateMutability": "view",
       "type": "function"
     },
@@ -144,13 +251,35 @@
           "name": "",
           "type": "address"
         },
-        { "internalType": "address", "name": "", "type": "address" },
-        { "internalType": "bytes32", "name": "", "type": "bytes32" },
-        { "internalType": "bytes", "name": "", "type": "bytes" },
-        { "internalType": "bytes", "name": "", "type": "bytes" }
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
       ],
       "name": "beforeAgreementUpdated",
-      "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
       "stateMutability": "view",
       "type": "function"
     },
@@ -163,13 +292,23 @@
         }
       ],
       "name": "checkRegistered",
-      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        { "internalType": "string", "name": "code", "type": "string" },
+        {
+          "internalType": "string",
+          "name": "code",
+          "type": "string"
+        },
         {
           "internalType": "bytes32",
           "name": "phoneNumberHash",
@@ -206,7 +345,11 @@
           "name": "newUserAddress",
           "type": "address"
         },
-        { "internalType": "bytes32", "name": "codeHash", "type": "bytes32" },
+        {
+          "internalType": "bytes32",
+          "name": "codeHash",
+          "type": "bytes32"
+        },
         {
           "internalType": "bytes32",
           "name": "phoneNumberHash",
@@ -220,7 +363,5 @@
     }
   ],
   "name": "Fluidum",
-  "address": "0xa504f03dE7d77C419121Ba95f7C4D09Adf7c4456"
+  "address": "0x3460cfB559913689670B6F73DA132e404428DE39"
 }
-
->>>>>>> 0e31d1db7cbbfafdf1d19a9cd45b07589a791623

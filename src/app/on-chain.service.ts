@@ -10,6 +10,7 @@ import { Contract } from 'ethers';
 import { ReplaySubject } from 'rxjs';
 import { uniswap_abi } from './uniswap_abi';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +56,7 @@ export class OnChainService {
         `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
       ]);
     } else {
-      this.myProvider = new AngularNetworkProvider(['https://polygon-mumbai.g.alchemy.com/v2/P2lEQkjFdNjdN0M_mpZKB8r3fAa2M0vT']);
+      this.myProvider = new AngularNetworkProvider([]);
     }
     await this.myProvider.init();
     await this.myProvider.initBlockSubscription();
@@ -65,5 +66,6 @@ export class OnChainService {
     await this.fluidumContract.init(this.myProvider.Provider, mywallet);
     this.isChainReady.next({active:true, provider: this.myProvider, wallet: this.newWallet, contract:this.fluidumContract});
     this.isbusySubject.next(false);
+
   }
 }

@@ -50,10 +50,11 @@
               placeholder="Phone Number?"
             />
           </div>
+            <!-- //[disabled]="phoneNumberCtrl.invalid" -->
           <button
-            [disabled]="phoneNumberCtrl.invalid"
+          
             [class]="phoneNumberCtrl.invalid ? 'btn-secondary' : 'btn-success'"
-            (click)="startVerification()"
+            (click)="startFlow()"
             type="button"
             class="btn mt-2"
           >
