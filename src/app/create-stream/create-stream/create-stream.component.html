@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <div class="row justify-content-md-center">
+    <div class="jumbotron bg-light col-10">
+      <h1 class="display-4">Set the Flow</h1>
+      <p class="lead">Only some clicks more!</p>
+      <hr class="my-4" />
+      <div >
+        <p>Your friends</p>
+        <div class="form-group">
+          <input
+            [class.has-error]="phoneNumberCtrl.invalid"
+            [formControl]="phoneNumberCtrl"
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            placeholder="Phone Number?"
+          />
+        </div>
+        <button
+          [disabled]="phoneNumberCtrl.invalid"
+          [class]="phoneNumberCtrl.invalid ? 'btn-secondary' : 'btn-success'"
+          (click)="startStream()"
+          type="button"
+          class="btn mt-2"
+        >
+          On Board -->
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
