@@ -6,6 +6,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract Fluidum is Ownable {
     uint256 private constant pendingRegistrationValidityPeriod = 5 minutes;
     mapping(bytes32 => address) private _usersByPhoneNumber;
+    mapping(address => bytes32) private _phoneNumbersByUser;
     mapping(bytes32 => PendingRegistration)
         private _pendingRegistrationsByPhoneNumber;
 
@@ -84,6 +85,20 @@ contract Fluidum is Ownable {
         );
         //TODO either msg.sender or the address recovered from signature
         _usersByPhoneNumber[phoneNumberHash] = msg.sender;
+        _phoneNumbersByUser[msg.sender] = phoneNumberHash;
         delete _pendingRegistrationsByPhoneNumber[phoneNumberHash];
+    }
+
+    /**
+     * @notice Checks if phone number is registered
+     *
+     * @param addressToCheck address to check
+     */
+    function checkRegistered(address addressToCheck)
+        public
+        view
+        returns (bool)
+    {
+        return _phoneNumbersByUser[addressToCheck] != bytes32(0);
     }
 }

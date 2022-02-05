@@ -4,7 +4,7 @@ import { OnChainService } from 'src/app/on-chain.service';
 @Component({
   selector: 'fluidum-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss']
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
   navLinks: any[] = [
@@ -21,19 +21,18 @@ export class NavigationComponent implements OnInit {
     },
     {
       label: 'Debug Contract',
-      link: './debug',  
+      link: './debug',
       index: 5,
     },
   ];
   connected: boolean;
-  wallet: import("c:/Users/javie/Documents/WEB/BLOCKCHAIN/fluidum/src/app/dapp-injector/index").AngularWallet;
-  constructor(private onChainService:OnChainService) { }
+  //wallet: import("c:/Users/javie/Documents/WEB/BLOCKCHAIN/fluidum/src/app/dapp-injector/index").AngularWallet;
+  constructor(private onChainService: OnChainService) {}
 
   ngOnInit(): void {
-    this.onChainService.isChainReady.subscribe(chain=> {
-      this.connected = chain.active
-      this.wallet = chain.wallet;
-    })
+    this.onChainService.isChainReady.subscribe((chain) => {
+      this.connected = chain.active;
+      //this.wallet = chain.wallet;
+    });
   }
-
 }
