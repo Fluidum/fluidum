@@ -20,16 +20,13 @@
         </p>
       </div>
       <ng-template #iamconnected>
-        <div >
-          <p>
+        <div *ngIf="registered == true" >
+          <p >
            You are connected, please see your active streams
           </p>
-
-        </div>
-      </ng-template>
-      <!-- Example split danger button -->
+                <!-- Example split danger button -->
       <div class="btn-group">
-        <button type="button" class="btn btn-danger">Action</button>
+       
         <button
           type="button"
           class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -47,6 +44,16 @@
           <a class="dropdown-item" href="#">Separated link</a>
         </div>
       </div>
+        </div>
+
+        <div *ngIf="registered == false" >
+          <p >
+           Plase input your phone number and start the onboarding process
+          </p>
+          <button (click)="startVerification()" type="button" class="btn btn-success">On Board --></button>
+        </div> 
+      </ng-template>
+
     </div>
   </div>
 </div>
