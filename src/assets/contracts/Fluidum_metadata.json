@@ -1,0 +1,89 @@
+{
+    "abi": [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "addressToCheck",
+                    "type": "address"
+                }
+            ],
+            "name": "checkRegistered",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "code",
+                    "type": "string"
+                },
+                {
+                    "internalType": "bytes32",
+                    "name": "phoneNumberHash",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "finishVerification",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "newUserAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "bytes32",
+                    "name": "phoneNumberHash",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "mockRegistration",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "newUserAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "bytes32",
+                    "name": "codeHash",
+                    "type": "bytes32"
+                },
+                {
+                    "internalType": "bytes32",
+                    "name": "phoneNumberHash",
+                    "type": "bytes32"
+                }
+            ],
+            "name": "startVerification",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ],
+    "name": "Fluidum",
+    "address": "0xbA3abE869FB26b273b0c0A0A23bE4c27C00EdCaA"
+}
