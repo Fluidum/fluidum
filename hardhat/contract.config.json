@@ -1,8 +1,7 @@
 {
-  "fluidum": {
+  "Fluidum": {
     "name": "Fluidum",
     "artifactsPath": "Fluidum.sol/Fluidum.json",
-    "jsonName": "fluidum",
-    "ctor": ["hello roadweb3"]
+    "jsonName": "Fluidum"
   }
 }

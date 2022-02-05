@@ -1,14 +1,12 @@
 import { ensureDir, readFileSync, readdirSync, writeFileSync } from 'fs-extra';
 import { join } from 'path';
 
-
 interface ICONTRACT_DEPLOY {
   artifactsPath: string;
   name: string;
   ctor?: any;
   jsonName: string;
 }
-
 
 const processDir = process.cwd();
 
@@ -28,17 +26,10 @@ function toUnder(camel: string) {
   return dash;
 }
 
-
 const artifactsPath = '../src/assets/artifacts/contracts/';
 
- async function wire() {
-
-
-
-
+async function wire() {
   const contracts = readdirSync('./contracts/');
-
-
 
   const contractArtifacts: Array<ICONTRACT_DEPLOY> = [];
   for (const contractFolder of contracts) {
@@ -59,7 +50,7 @@ const artifactsPath = '../src/assets/artifacts/contracts/';
           name: name,
           artifactsPath: contractArtifact,
           jsonName,
-          ctor:[]
+          ctor: [],
         });
       }
     }
@@ -79,13 +70,9 @@ const artifactsPath = '../src/assets/artifacts/contracts/';
     if (constructorFilter.length == 1) {
       const inputs = constructorFilter[0].inputs;
       if (inputs.length > 0) {
-    
-        for (let i = 0; i < inputs.length ; i++) {
-      
-          contract.ctor.push(`${inputs[i].name}:${inputs[i].type}`)
-    
+        for (let i = 0; i < inputs.length; i++) {
+          contract.ctor.push(`${inputs[i].name}:${inputs[i].type}`);
         }
-       
       }
     }
 
@@ -109,11 +96,11 @@ const artifactsPath = '../src/assets/artifacts/contracts/';
     contract_config[key] = contract;
   }
   if (contractArtifacts.length > 0) {
-  writeFileSync(
-    join(processDir, 'contract.config.json'),
-    JSON.stringify(contract_config)
-  );
-  console.log(`------  Config File Updated`);
+    writeFileSync(
+      join(processDir, 'contract.config.json'),
+      JSON.stringify(contract_config)
+    );
+    console.log(`------  Config File Updated`);
   } else {
     console.log(`------  No new Contracts found`);
   }

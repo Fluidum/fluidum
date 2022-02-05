@@ -72,7 +72,7 @@ const config: HardhatUserConfig = {
     artifacts: '../src/assets/artifacts',
   },
   networks: {
-    defaultNetwork:  {
+    defaultNetwork: {
       url: `https://kovan.infura.io/v3/${process.env.INFURA_KEY}`, //
 
       accounts: [process.env.PRIV_KEY],
