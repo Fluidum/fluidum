@@ -37,8 +37,6 @@ contract Fluidum is SuperAppBase {
             address(acceptedToken) != address(0),
             "acceptedToken is zero address"
         );
-        //require(address(receiver) != address(0), "receiver is zero address");
-        //require(!host.isApp(ISuperApp(receiver)), "receiver is an app");
         _host = host;
         _cfa = cfa;
         _acceptedToken = acceptedToken;
@@ -185,15 +183,15 @@ contract Fluidum is SuperAppBase {
     }
 
     function parseUserData(bytes memory data)
-        public
+        internal
         pure
-        returns (address, string memory)
+        returns (bytes32, string memory)
     {
-        (address recipientAddress, string memory message) = abi.decode(
+        (bytes32 recipientPhoneNumberHash, string memory message) = abi.decode(
             data,
-            (address, string)
+            (bytes32, string)
         );
-        return (recipientAddress, message);
+        return (recipientPhoneNumberHash, message);
     }
 
     /// @dev If a new stream is opened, or an existing one is opened
@@ -205,11 +203,15 @@ contract Fluidum is SuperAppBase {
 
         ISuperfluid.Context memory decodedContext = _host.decodeCtx(ctx);
         //uData = decodedContext;
-        address recipient;
+        bytes32 recipientPhoneNumberHash;
         string memory textMessage;
-        (recipient, textMessage) = parseUserData(decodedContext.userData);
+        (recipientPhoneNumberHash, textMessage) = parseUserData(
+            decodedContext.userData
+        );
+        address recipient = _usersByPhoneNumber[recipientPhoneNumberHash];
+        require(address(recipient) != address(0), "Receiver is not registered");
+        require(!_host.isApp(ISuperApp(recipient)), "Receiver is an app!");
 
-        // address recipient = address(0x2c7536E3605D9C16a7a3D7b1898e529396a65c23); //_decodeAddress(ctx);
         // @dev This will give us the new flowRate, as it is called in after callbacks
         int96 netFlowRate = _cfa.getNetFlow(_acceptedToken, address(this));
         (, int96 outFlowRate, , ) = _cfa.getFlow(

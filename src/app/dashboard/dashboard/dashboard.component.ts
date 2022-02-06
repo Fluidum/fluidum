@@ -75,10 +75,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     try {
       const recipient = this.contract.Address;
       const flowRate = '3225232222200000';
-
+      console.log(
+        `Hashed phone is ${utils.keccak256(utils.toUtf8Bytes('886999888777'))}`
+      );
       const hash = utils.defaultAbiCoder.encode(
-        ['address', 'string'],
-        ['0x2c7536E3605D9C16a7a3D7b1898e529396a65c23', 'hello!']
+        ['bytes32', 'string'],
+        [utils.keccak256(utils.toUtf8Bytes('886999888777')), 'hello!']
       );
 
       const createFlowOperation = sf.cfaV1.createFlow({
