@@ -87,17 +87,16 @@ export class Web3ModalComponent implements AfterViewInit {
   public connected: boolean = false;
   web3Modal: any;
 
-  constructor(
-    @Inject(DOCUMENT) private readonly document: any) {
-      console.log(this.network)
-    }
+  constructor(@Inject(DOCUMENT) private readonly document: any) {
+    console.log(this.network);
+  }
 
   @Output() onConnect: EventEmitter<any> = new EventEmitter();
   @Output() onDisConnect: EventEmitter<void> = new EventEmitter();
   @Input() public providerArray: Array<string> = [];
 
   @Input() public network!: string;
-  @Input () public injectionProvider!: any;
+  @Input() public injectionProvider!: any;
 
   createWeb3Modal() {
     try {
@@ -175,7 +174,7 @@ export class Web3ModalComponent implements AfterViewInit {
   async web3modalAction(event: any) {
     console.log(event);
     if (event == false) {
-      console.log('false')
+      console.log('false');
       await this.logoutOfWeb3Modal();
     } else if (event == true) {
       await this.connectWallet();
@@ -188,13 +187,16 @@ export class Web3ModalComponent implements AfterViewInit {
     }
 
     await this.web3Modal.clearCachedProvider();
-    console.log(this.injectionProvider.signer)
+    console.log(this.injectionProvider.signer);
 
-   
-    if (this.injectionProvider && this.injectionProvider.provider && typeof this.injectionProvider.provider.disconnect == "function") {
-      console.log('falseXXXXXX')
-       await this.injectionProvider.provider.disconnect();
-     }
+    if (
+      this.injectionProvider &&
+      this.injectionProvider.provider &&
+      typeof this.injectionProvider.provider.disconnect == 'function'
+    ) {
+      console.log('falseXXXXXX');
+      await this.injectionProvider.provider.disconnect();
+    }
     this.onDisConnect.emit();
     // setTimeout(() => {
     //   window.location.reload();
@@ -211,9 +213,9 @@ export class Web3ModalComponent implements AfterViewInit {
     if (this.providerArray.length == 0) {
       return;
     }
-    console.log('hoal')
+    console.log('hoal');
     const provider = await this.web3Modal.connect();
-    console.log(provider)
+    console.log(provider);
     this.onConnect.emit(provider);
     location.reload();
     this.createProviderHooks(provider);
@@ -247,7 +249,7 @@ export class Web3ModalComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loadWallets();
-    this.connected = this.injectionProvider.found
+    this.connected = this.injectionProvider.found;
   }
 
   async loadWallets() {

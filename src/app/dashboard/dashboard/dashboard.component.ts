@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ).payload[0];
     console.log(this.registered);
     this.onChainService.isbusySubject.next(false);
-      this.showInputCode = true
+    
   }
 
   async startFlow() {
