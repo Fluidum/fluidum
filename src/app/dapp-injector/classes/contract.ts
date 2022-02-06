@@ -1,22 +1,25 @@
 import { Injectable, OnDestroy, Inject } from '@angular/core';
-import {  providers, Wallet, Contract } from 'ethers';
+import { providers, Wallet, Contract } from 'ethers';
 import { ReplaySubject } from 'rxjs';
-import { ICONTRACT, ITRANSACTION_DETAILS, ITRANSACTION_RESULT } from '../models/models';
+import {
+  ICONTRACT,
+  ITRANSACTION_DETAILS,
+  ITRANSACTION_RESULT,
+} from '../models/models';
 
 @Injectable()
-export  class AngularContract implements OnDestroy {
+export class AngularContract implements OnDestroy {
   private _contract!: Contract;
   private _provider!: providers.JsonRpcProvider;
   private _balance: any;
 
-  public eventSubscriptionObject:{[key:string]: ReplaySubject<any>} = {};
+  public eventSubscriptionObject: { [key: string]: ReplaySubject<any> } = {};
 
-  public contractBalanceSubscription: ReplaySubject<any>=
-    new ReplaySubject(1);
+  public contractBalanceSubscription: ReplaySubject<any> = new ReplaySubject(1);
 
   constructor(@Inject('metadata') public metadata: ICONTRACT) {}
 
-  async init(provider:any, wallet:Wallet) {
+  async init(provider: any, wallet: Wallet) {
     this._provider = provider;
     this._contract = await new Contract(
       this.metadata.address,
@@ -30,7 +33,7 @@ export  class AngularContract implements OnDestroy {
     return this.metadata.abi;
   }
 
-  get Adress() {
+  get Address() {
     return this.metadata.address;
   }
 
@@ -42,7 +45,7 @@ export  class AngularContract implements OnDestroy {
   }
 
   async refreshBalance() {
-    this._balance = await this._provider.getBalance(this.Adress);
+    this._balance = await this._provider.getBalance(this.Address);
     this.contractBalanceSubscription.next(this._balance);
     return this._balance;
   }
@@ -51,23 +54,25 @@ export  class AngularContract implements OnDestroy {
   // #region XXXXXXXXXXXX FUNCTIONS AND TRANSACTIONS XXXXXXXXXX
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-  async runTransactionFunction(functionName:string, args:any) {
- 
-    let notification_message:ITRANSACTION_RESULT = {
-      success: false
-    }
+  async runTransactionFunction(functionName: string, args: any) {
+    let notification_message: ITRANSACTION_RESULT = {
+      success: false,
+    };
 
-    let transaction_details:ITRANSACTION_DETAILS = {
-      txhash: "",
+    let transaction_details: ITRANSACTION_DETAILS = {
+      txhash: '',
       bknr: 0,
-      from: "",
-      gas: "",
-      to: "",
-      value: "",
+      from: '',
+      gas: '',
+      to: '',
+      value: '',
     };
 
     try {
-      const result_tx = await this._contract.functions[functionName].apply(this, args);
+      const result_tx = await this._contract.functions[functionName].apply(
+        this,
+        args
+      );
       const result = await result_tx.wait();
       transaction_details.txhash = result.transactionHash;
       transaction_details.from = result.from;
@@ -78,6 +83,7 @@ export  class AngularContract implements OnDestroy {
       result_tx.value == undefined
         ? (transaction_details.value = '0')
         : (transaction_details.value = result_tx.value.toString());
+
         notification_message.success = true;
         notification_message.success_result = transaction_details;
    
@@ -110,31 +116,32 @@ export  class AngularContract implements OnDestroy {
       }
       notification_message.error_message = myMessage;
     }
-  
-    return   { msg:notification_message, payload:undefined};
+
+    return { msg: notification_message, payload: undefined };
   }
 
-  async runContractFunction(functionName:string, args:any) {
-    let notification_message:ITRANSACTION_RESULT = {
-      success: false
-    }
+  async runContractFunction(functionName: string, args: any) {
+    let notification_message: ITRANSACTION_RESULT = {
+      success: false,
+    };
 
-   
     try {
-      const result = await this._contract.functions[functionName].apply(this, args);
-      notification_message.success = true
-       return   { msg:notification_message, payload:result};
-    } catch (error:any) {
-      notification_message.error_message = error.toString()
-      return   { msg:notification_message};
+      const result = await this._contract.functions[functionName].apply(
+        this,
+        args
+      );
+      notification_message.success = true;
+      return { msg: notification_message, payload: result };
+    } catch (error: any) {
+      notification_message.error_message = error.toString();
+      return { msg: notification_message };
     }
-   
   }
 
- async  runFunction(functionName: string, args: any, state?: string) {
+  async runFunction(functionName: string, args: any, state?: string) {
     if (state == undefined) {
       const myFunction_filter = this.Abi.filter(
-        (fil:any) => fil.name == functionName
+        (fil: any) => fil.name == functionName
       );
       if (myFunction_filter.length !== 1) {
         throw new Error('Function not found');
@@ -147,7 +154,6 @@ export  class AngularContract implements OnDestroy {
     } else {
       return await this.runTransactionFunction(functionName, args);
     }
-
   }
 
   // #endregion XXXXXXX FUNCTIONS  XXXXXXXXXX
