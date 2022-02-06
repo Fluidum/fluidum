@@ -26,13 +26,13 @@
               <span class="sr-only">Actions </span>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" [routerLink]="['create-stream']" 
+              <a class="dropdown-item" (click)="startFlow()" 
                 >Create a stream</a
               >
-              <a class="dropdown-item" href="#">Another action</a>
+              <!-- <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <a class="dropdown-item" href="#">Separated link</a> -->
             </div>
           </div>
           <p>your streams</p>
@@ -50,16 +50,23 @@
               placeholder="Phone Number?"
             />
           </div>
-            <!-- //[disabled]="phoneNumberCtrl.invalid" -->
           <button
-          
-            [class]="phoneNumberCtrl.invalid ? 'btn-secondary' : 'btn-success'"
-            (click)="startFlow()"
-            type="button"
+            (click)="startVerification()"
+            type="button btn-secondary"
             class="btn mt-2"
           >
-            On Board -->
+            Start Stream
           </button>
+
+          <button
+          [disabled]="phoneNumberCtrl.invalid"
+          [class]="phoneNumberCtrl.invalid ? 'btn-secondary' : 'btn-success'"
+          (click)="startVerification()"
+          type="button"
+          class="btn mt-2"
+        >
+          On Board -->
+        </button>
         </div>
       </ng-template>
     </div>

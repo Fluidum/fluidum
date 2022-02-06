@@ -51,12 +51,13 @@ export class OnChainService {
 
   async init() {
     const currentPrivateKey = environment.privKey;
+    
     if (currentPrivateKey) {
       this.myProvider = new AngularNetworkProvider([
         `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
       ]);
     } else {
-      this.myProvider = new AngularNetworkProvider([]);
+      this.myProvider = new AngularNetworkProvider([  `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`]);
     }
     await this.myProvider.init();
     await this.myProvider.initBlockSubscription();

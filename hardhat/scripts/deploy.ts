@@ -26,7 +26,7 @@ async function main() {
     readFileSync(join(processDir, 'contract.config.json'), 'utf-8')
   ) as { [key: string]: ICONTRACT_DEPLOY };
 
-  const deployContracts = ['FluidumTest'];
+  const deployContracts = ['Fluidum'];
 
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
