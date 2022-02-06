@@ -33,10 +33,10 @@
     "
     class="content-style"
   >
-    <div *ngIf="data.sucess_message !== undefined">
+    <div *ngIf="data.success_message !== undefined">
       {{ data.success_message }}
     </div>
-    <div *ngIf="data.sucess_message === undefined">
+    <div *ngIf="data.success_message === undefined">
       Tx: {{ data.success_result.txhash }}<br />
       From: {{ data.success_result.from }}<br />
       To: {{ data.success_result.to }}<br />

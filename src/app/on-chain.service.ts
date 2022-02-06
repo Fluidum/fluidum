@@ -100,7 +100,7 @@ export class OnChainService {
           });
           this.allowedChain = true
           this.injectionProvider= {provider:provider,signer:signer,providerNetwork,found:true}
-          this.router.navigate(['/dashboard]'])
+          this.router.navigate(['/dashboard'])
           this.isbusySubject.next(false);
         } else {
           this.isbusySubject.next(false);

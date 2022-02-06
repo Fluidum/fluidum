@@ -14,6 +14,7 @@ import { OnChainService } from '../../on-chain.service';
 import { Framework } from '@superfluid-finance/sdk-core';
 import { providers } from 'ethers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Console } from 'console';
 
 @Component({
   selector: 'fluidum-dashboard',
@@ -36,6 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   address: string;
   private ngUnsubscribe: Subject<void> = new Subject();
   showInputCode: boolean;
+  phoneNumber: any;
 
   constructor(
     private notifierService: NotifierService,
@@ -79,7 +81,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     try {
-      const recipient = this.contract.Address;
+      const recipient = this.contract.Contract.address
       const flowRate = '3225232222200000';
 
       console.log(
@@ -123,6 +125,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async startVerification() {
     this.onChainService.isbusySubject.next(true);
     console.log(this.phoneNumberCtrl.value);
+
+    this.phoneNumber = this.phoneNumberCtrl.value;
+
     this.address = await this.wallet.getAddress();
 
     const myResult = await this.startVerificationCloud({
@@ -163,10 +168,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.showInputCode = false;
     this.onChainService.isbusySubject.next(true);
  
-    this.address = await this.wallet.getAddress();
+    //this.address = await this.wallet.getAddress();
+
+
 
     console.log(this.phoneNumberCtrl.value)
-    const phoneNumberHash = utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value));
+    console.log(this.phoneNumber)
+    console.log(this.codeCtrl.value)
+    const phoneNumberHash = utils.keccak256(utils.toUtf8Bytes(this.phoneNumber));
+
     const myResult = await this.contract.runFunction('finishVerification', [
       this.codeCtrl.value,
       phoneNumberHash,  { gasLimit: 10000000 }
@@ -211,9 +221,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.contract = chain.contract;
         this.contract.Contract.on('RegistrationSuccessEvent', (args) => {
           console.log('success')
-          this.notifierService.showNotificationTransaction({success:true,success_message:'Great you are already Onbpoard'})
+          this.notifierService.showNotificationTransaction({success:true,success_message:'Great you are already On board'})
           this.onChainService.isbusySubject.next(false);
-          
+         
         });
 
         this.contract.Contract.on('RegistrationTimedOutEvent', (args) => {

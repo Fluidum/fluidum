@@ -21,11 +21,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
       index: 1,
     },
-    {
-      label: 'Debug Contract',
-      link: './debug',
-      index: 5,
-    },
+    // {
+    //   label: 'Debug Contract',
+    //   link: './debug',
+    //   index: 5,
+    // },
   ];
   private ngUnsubscribe: Subject<void> = new Subject();
   connected: boolean;

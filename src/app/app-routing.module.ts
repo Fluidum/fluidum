@@ -7,7 +7,7 @@ import { DebugContractComponent } from './debug-contract/debug-contract/debug-co
 
 import { HomeComponent } from './home/home/home.component';
 
-const routes: Routes = [ { path: '', redirectTo: '/home', pathMatch: 'full' },
+const routes: Routes = [ { path: '', redirectTo: '/dashboard/create-stream', pathMatch: 'full' },
 { path: 'home', component:  HomeComponent},
 { path: 'dashboard',   canActivate: [AuthGuard],component:  DashboardComponent},
 { path: 'debug',  canActivate: [AuthGuard], component:  DebugContractComponent},

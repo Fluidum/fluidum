@@ -1,10 +1,10 @@
 <div class="container mt-4">
   <div class="row justify-content-md-center">
-    <div class="jumbotron bg-light col-10">
+    <div class="jumbotron bg-light col-12 col-md-10">
       <h1 class="display-4">Set the Flow</h1>
-      <p class="lead">Only some clicks more!</p>
+      <p class="lead">Check your friends</p>
       <hr class="my-4" />
-      <div >
+      <div>
         <p>Your friends</p>
         <div class="form-group">
           <input
@@ -13,7 +13,7 @@
             type="number"
             class="form-control"
             id="exampleInputPassword1"
-            placeholder="Phone Number?"
+            placeholder="Friend Phone Number?"
           />
         </div>
         <button
@@ -25,6 +25,49 @@
         >
           On Board -->
         </button>
+      </div>
+      <div class="mt-4">
+        <div class="form-group">
+       
+            <input
+              [class.has-error]="amountCtrl.invalid"
+              [formControl]="amountCtrl"
+              type="number"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Amount"
+            />
+            <div class="btn-group">
+              <button
+              type="button"
+              class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Stream per</span>
+              </button>
+              <div class="dropdown-menu">
+          
+                <a class="dropdown-item" (click)="changeTime('month')">Per Month</a>
+                <a class="dropdown-item" (click)="changeTime('week')">Per Weel</a>
+                <a class="dropdown-item" (click)="changeTime('day')">Per Day</a>
+                <a class="dropdown-item" (click)="changeTime('hour')">Per Hour</a>
+                <!-- <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="changeTime">Separated link</a>-->
+              </div> 
+            </div>
+            <p>do you want to stream {{amountCtrl.value}} per {{period}}</p>
+            <button
+            [disabled]="this.flowRateCtrl.invalid || this.amountCtrl.invalid"
+            [class]="this.flowRateCtrl.invalid || this.amountCtrl.invalid ? 'btn-secondary' : 'btn-success'"
+            (click)="startStream()"
+            type="button"
+            class="btn mt-2"
+          >
+           Start stream
+          </button>
+        </div>
       </div>
     </div>
   </div>
