@@ -6,7 +6,7 @@ import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/c
 import {SuperAppBase} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
 
 contract Fluidum is SuperAppBase {
-    uint256 private constant pendingRegistrationValidityPeriod = 5 minutes;
+    uint256 private constant pendingRegistrationValidityPeriod = 1 minutes;
     mapping(bytes32 => address) private _usersByPhoneNumber;
     mapping(address => bytes32) private _phoneNumbersByUser;
     mapping(bytes32 => PendingRegistration)
@@ -16,6 +16,9 @@ contract Fluidum is SuperAppBase {
     IConstantFlowAgreementV1 private _cfa; // the stored constant flow agreement class address
 
     ISuperToken public _acceptedToken; // accepted token
+
+    event RegistrationTimedOutEvent(bytes32 indexed phoneNumberHash);
+    event RegistrationSuccessEvent(bytes32 indexed phoneNumberHash);
 
     struct PendingRegistration {
         address newUserAddress;
@@ -107,21 +110,25 @@ contract Fluidum is SuperAppBase {
                 .newUserAddress == msg.sender,
             "The registration is not pending"
         );
-        require(
+        if (
             block.timestamp -
                 _pendingRegistrationsByPhoneNumber[phoneNumberHash].timestamp <=
-                pendingRegistrationValidityPeriod,
-            "Registration timed out"
-        );
-        //Convenient online keccak256 - https://profitplane.com/keccak256
-        require(
-            keccak256(abi.encodePacked(code)) ==
-                _pendingRegistrationsByPhoneNumber[phoneNumberHash].codeHash,
-            "The provided code is incorrect"
-        );
-        //TODO either msg.sender or the address recovered from signature
-        _usersByPhoneNumber[phoneNumberHash] = msg.sender;
-        _phoneNumbersByUser[msg.sender] = phoneNumberHash;
+            pendingRegistrationValidityPeriod
+        ) {
+            //Convenient online keccak256 - https://profitplane.com/keccak256
+            require(
+                keccak256(abi.encodePacked(code)) ==
+                    _pendingRegistrationsByPhoneNumber[phoneNumberHash]
+                        .codeHash,
+                "The provided code is incorrect"
+            );
+            //TODO either msg.sender or the address recovered from signature
+            _usersByPhoneNumber[phoneNumberHash] = msg.sender;
+            _phoneNumbersByUser[msg.sender] = phoneNumberHash;
+            emit RegistrationSuccessEvent(phoneNumberHash);
+        } else {
+            emit RegistrationTimedOutEvent(phoneNumberHash);
+        }
         delete _pendingRegistrationsByPhoneNumber[phoneNumberHash];
     }
 
