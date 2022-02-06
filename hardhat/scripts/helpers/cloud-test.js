@@ -1,16 +1,7 @@
-import { Contract, providers, Signer, utils, Wallet } from 'ethers';
-import { readFileSync } from 'fs-extra';
-import { join } from 'path';
-import * as dotenv from 'dotenv';
 
-
+const dotenv = require('dotenv')
+const ethers = require('ethers')
 dotenv.config();
-const contract_path_relative = '../src/assets/contracts/';
-const processDir = process.cwd();
-const contract_path = join(processDir, contract_path_relative);
-const contract_config = JSON.parse(
-  readFileSync(join(processDir, 'contract.config.json'), 'utf-8')
-) as { [key: string]: any };
 
 const abi = [
   {
@@ -378,14 +369,14 @@ const abi = [
 
 const tinker = async () => {
   const url = `https://speedy-nodes-nyc.moralis.io/${process.env.MORALISID}/polygon/mumbai`;
-  const provider =  await new providers.JsonRpcProvider(url);
+  const provider =  await new ethers.providers.JsonRpcProvider(url);
 
-  const _wallet = new Wallet(process.env.PRIV_KEY);
+  const _wallet = new ethers.Wallet(process.env.PRIV_KEY);
 
   const myWallet = await _wallet.connect(provider);
 
 
-  const userRegistrationContract = await new Contract(
+  const userRegistrationContract = await new ethers.Contract(
     '0x27183A941F5Be5F8a17AB5E657a0fC2a9c48b5fd',
     abi,
     myWallet
@@ -394,8 +385,8 @@ const tinker = async () => {
 
   const passcode = 'aaaaaaa';
   console.log(passcode)
-  const passcodeHash = "0x" + utils.keccak256(passcode)
-  const phonenumerHash = utils.keccak256("5555555"); 
+  const passcodeHash = "0x" + ethers.utils.keccak256(passcode)
+  const phonenumerHash = ethers.utils.keccak256("5555555"); 
   console.log(395)
   console.log(phonenumerHash)
 

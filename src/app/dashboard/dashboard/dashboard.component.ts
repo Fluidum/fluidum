@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AngularContract, AngularNetworkProvider, AngularWallet, NotifierService } from 'angular-web3';
 import { utils } from 'ethers';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { OnChainService } from '../../on-chain.service';
  import { Framework } from '@superfluid-finance/sdk-core';
 import { providers } from 'ethers';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'fluidum-dashboard',
@@ -26,7 +27,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private notifierService: NotifierService,
-    private onChainService: OnChainService
+    private onChainService: OnChainService,
+    private http:HttpClient
   ) {
     // this.phoneNumberCtrl.valueChanges.subscribe(value=> {
     //   console.log(value);
@@ -116,10 +118,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log(this.phoneNumberCtrl.value);
     this.address = await this.wallet.getAddress();
     const kekash = utils.keccak256(this.phoneNumberCtrl.value);
-    const myResult = await this.contract.runFunction('mockRegistration', [
-      this.address,
-      kekash
-    ]);
+    console.log(kekash)
+    const myResult = await this.startVerificationCloud({phoneNumberHash:kekash, control: "20220204",address:this.address}).toPromise()
+
 
    
     if (myResult.msg.success == false) {
@@ -135,6 +136,45 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async createStream() {}
 
   async register() {}
+
+
+  async finishVerification() {
+    this.onChainService.isbusySubject.next(true);
+    console.log(this.phoneNumberCtrl.value);
+    this.address = await this.wallet.getAddress();
+    const kekash = utils.keccak256(this.phoneNumberCtrl.value);
+    const myResult = await this.contract.runFunction('mockRegistration', [
+      this.address,
+      kekash
+    ]);
+
+   
+    if (myResult.msg.success == false) {
+      await this.notifierService.showNotificationTransaction(myResult.msg);
+    }
+
+    if (myResult.msg.success_result !== undefined) {
+      await this.notifierService.showNotificationTransaction(myResult.msg);
+    }
+    this.onChainService.isbusySubject.next(false);
+  }
+  startVerificationCloud(verificationObject: {phoneNumberHash:string,address:string, control:string }): Observable<any> {
+
+    // let booking = {uid: queryUid }
+
+    const url =
+    'https://us-central1-fluidum-eth.cloudfunctions.net/fluidumVerify';
+    const body = JSON.parse(JSON.stringify(verificationObject));
+    // url changed from this.introUrl
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(url, body, httpOptions);
+  
+  }
+
 
   ngOnInit(): void {
     this.onChainService.isChainReady

@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { CreateStreamModule } from './create-stream/create-stream.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CreateStreamModule } from './create-stream/create-stream.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
 
     // @dev Features modulesto Work with
