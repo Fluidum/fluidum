@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ]);
   codeCtrl: FormControl = new FormControl('', [
     Validators.required,
-    Validators.maxLength(6), Validators.minLength(6)
+    Validators.maxLength(6),
+    Validators.minLength(6),
   ]);
   address: string;
   private ngUnsubscribe: Subject<void> = new Subject();
@@ -85,9 +86,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.log(
         `Hashed phone is ${utils.keccak256(utils.toUtf8Bytes('886999888777'))}`
       );
+      const userAddress = await this.wallet.getAddress();
       const hash = utils.defaultAbiCoder.encode(
-        ['bytes32', 'string'],
-        [utils.keccak256(utils.toUtf8Bytes('886999888777')), 'hello!']
+        ['bytes32', 'string', 'address'],
+        [
+          utils.keccak256(utils.toUtf8Bytes('886999888777')),
+          'hello!',
+          userAddress,
+        ]
       );
 
       const createFlowOperation = sf.cfaV1.createFlow({
@@ -106,7 +112,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         `Congrats - you've just created a money stream!
     View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
   
-    Sender: ${await this.wallet.getAddress()}
+    Sender: ${userAddress}
     Receiver: ${recipient},
     FlowRate: ${flowRate}
     `
@@ -131,15 +137,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       control: '20220204',
       address: this.address,
     }).toPromise();
-    console.log(myResult)
-  if (myResult.success == true){
-    this.onChainService.isbusySubject.next(false);
-    this.showInputCode = true;
-  } else {
-    await this.notifierService.showNotificationTransaction({success:false,error_message:'Oops error connecting the cloud'});
-    this.onChainService.isbusySubject.next(false);
-  }
-  
+    console.log(myResult);
+    if (myResult.success == true) {
+      this.onChainService.isbusySubject.next(false);
+      this.showInputCode = true;
+    } else {
+      await this.notifierService.showNotificationTransaction({
+        success: false,
+        error_message: 'Oops error connecting the cloud',
+      });
+      this.onChainService.isbusySubject.next(false);
+    }
 
     // if (myResult.msg.success == false) {
     //   await this.notifierService.showNotificationTransaction(myResult.msg);
@@ -148,29 +156,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // if (myResult.msg.success_result !== undefined) {
     //   await this.notifierService.showNotificationTransaction(myResult.msg);
     // }
-
   }
 
   async createStream() {}
 
   async register() {}
 
-  async disconnectModal(){
-    
-  }
-  
+  async disconnectModal() {}
+
   async finishVerification() {
     this.showInputCode = false;
     this.onChainService.isbusySubject.next(true);
- 
+
     this.address = await this.wallet.getAddress();
 
-    console.log(this.phoneNumberCtrl.value)
-    const phoneNumberHash = utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value));
+    console.log(this.phoneNumberCtrl.value);
+    const phoneNumberHash = utils.keccak256(
+      utils.toUtf8Bytes(this.phoneNumberCtrl.value)
+    );
     const myResult = await this.contract.runFunction('finishVerification', [
       this.codeCtrl.value,
-      phoneNumberHash,  { gasLimit: 10000000 }
-
+      phoneNumberHash,
+      { gasLimit: 10000000 },
     ]);
 
     if (myResult.msg.success == false) {
@@ -183,7 +190,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onChainService.isbusySubject.next(false);
   }
   startVerificationCloud(verificationObject: {
-
     phoneNumber: string;
 
     address: string;
