@@ -83,7 +83,7 @@ export  class AngularContract implements OnDestroy {
    
     } catch (e:any) {
     
-      // console.log(e);
+      console.log(e);
       // Accounts for Metamask and default signer on all networks
       let myMessage =
         e.data && e.data.message

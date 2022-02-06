@@ -16,6 +16,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { CreateStreamModule } from './create-stream/create-stream.module';
 import { HttpClientModule } from '@angular/common/http';
+import { Web3ModalModule } from './web3-modal/web3-modal.module';
 
 
 @NgModule({

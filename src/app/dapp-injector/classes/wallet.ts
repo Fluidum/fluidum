@@ -4,6 +4,7 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Wallet } from 'ethers';
 import { ReplaySubject } from 'rxjs';
 import { ITRANSACTION_DETAILS, ITRANSACTION_RESULT } from '../models';
+import { timeStamp } from 'console';
 
 @Injectable()
 export class AngularWallet {
@@ -94,6 +95,11 @@ export class AngularWallet {
     }
     return notification_message;
   }
+
+  async initMeta(wallet){
+    this._myWallet = wallet;
+    return this._myWallet;
+  } 
 
   async init(provider: JsonRpcProvider) {
     if (this._myWallet == undefined) {

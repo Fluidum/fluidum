@@ -392,27 +392,26 @@ const tinker = async () => {
   );
 
 
-  const passcode = 'aaaaaaa';
-  console.log(passcode)
-  const passcodeHash =  utils.keccak256("passcode")
-  const phonenumerHash = utils.keccak256("5555555"); 
+
+  const passcodeHash =  utils.keccak256(utils.toUtf8Bytes("hello world"))//utils.keccak256("passcode")
+  const phonenumerHash = utils.keccak256(utils.toUtf8Bytes("5555555")); 
   console.log(395)
   console.log(phonenumerHash)
 
-  // const result_tx = await userRegistrationContract.functions[
-  //   'startVerification'
-  // ].apply(this, [
-  //   '0x0f1fEe8A923f513d23b4C606C7Ee84AC59e4aBCE',
-  //   passcodeHash,
-  //   phonenumerHash,
-  //   { gasLimit: 10000000 },
-  // ]);
+  const result_tx = await userRegistrationContract.functions[
+    'startVerification'
+  ].apply(this, [
+    '0x0f1fEe8A923f513d23b4C606C7Ee84AC59e4aBCE',
+    passcodeHash,
+    phonenumerHash,
+    { gasLimit: 10000000 },
+  ]);
 
-  // console.log(result_tx);
-  // const result = await result_tx.wait();
+  console.log(result_tx);
+  const result = await result_tx.wait();
 
-  // const transaction_details = result.transactionHash;
-  // console.log(transaction_details);
+  const transaction_details = result.transactionHash;
+  console.log(transaction_details);
 };
 
 tinker()

@@ -6,10 +6,9 @@ import {
   AngularWallet,
   ICONTRACT,
 } from 'angular-web3';
-import { Contract } from 'ethers';
+import { Contract, providers } from 'ethers';
 import { ReplaySubject } from 'rxjs';
 import { uniswap_abi } from './uniswap_abi';
-
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +18,14 @@ export class OnChainService {
   myProvider!: AngularNetworkProvider;
   newWallet!: AngularWallet;
   fluidumContract!: AngularContract;
-  public isChainReady: ReplaySubject< {active:boolean, wallet?:AngularWallet, provider?:AngularNetworkProvider, contract?:AngularContract}> = new ReplaySubject(1);
+  public isChainReady: ReplaySubject<{
+    active: boolean;
+    wallet?: AngularWallet;
+    provider?: AngularNetworkProvider;
+    contract?: AngularContract;
+  }> = new ReplaySubject(1);
   public isbusySubject: ReplaySubject<boolean> = new ReplaySubject(1);
+  injectionProvider: { provider: providers.Web3Provider; signer: providers.JsonRpcSigner; providerNetwork: providers.Network; found:boolean };
   constructor(
     @Inject('fluidumContractMetadata') public fluidumContractMetadata: ICONTRACT
   ) {}
@@ -50,23 +55,65 @@ export class OnChainService {
   }
 
   async init() {
-    const currentPrivateKey = environment.privKey;
-    
-    if (currentPrivateKey) {
+    let metamaskDeployment = true;
+    let localhost = false;
+    if (localhost == false) {
       this.myProvider = new AngularNetworkProvider([
         `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
       ]);
     } else {
-      this.myProvider = new AngularNetworkProvider([  `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`]);
+      this.myProvider = new AngularNetworkProvider([]);
     }
     await this.myProvider.init();
-    await this.myProvider.initBlockSubscription();
-    this.newWallet = new AngularWallet();
-    const mywallet = await this.newWallet.init(this.myProvider.Provider);
-    this.fluidumContract = new AngularContract(this.fluidumContractMetadata);
-    await this.fluidumContract.init(this.myProvider.Provider, mywallet);
-    this.isChainReady.next({active:true, provider: this.myProvider, wallet: this.newWallet, contract:this.fluidumContract});
-    this.isbusySubject.next(false);
 
+    if (metamaskDeployment == true) {
+      console.log('Check if 🦊 injected provider');
+      let ethereum = (window as any).ethereum;
+      if (!!(window as any).ethereum) {
+        let provider = new providers.Web3Provider(ethereum, 'any');
+        const signer = provider.getSigner();
+        console.log(provider);
+        const addresses = await provider.listAccounts();
+        console.log(addresses);
+        if (addresses.length > 0) {
+          const providerNetwork = provider && (await provider.getNetwork());
+          this.newWallet = new AngularWallet();
+
+          const myWallet = await this.newWallet.initMeta(signer);
+    
+          this.fluidumContract = new AngularContract(this.fluidumContractMetadata);
+          await this.fluidumContract.init(this.myProvider.Provider, myWallet);
+          this.isChainReady.next({
+            active: true,
+            provider: this.myProvider,
+            wallet: this.newWallet,
+            contract: this.fluidumContract,
+          });
+
+          this.injectionProvider= {provider:provider,signer:signer,providerNetwork,found:true}
+
+          this.isbusySubject.next(false);
+        } else {
+          this.isbusySubject.next(false);
+        }
+      } else {
+        this.isbusySubject.next(false);
+      }
+
+     
+
+    } else {
+      const myWallet = await this.newWallet.init(this.myProvider.Provider);
+
+      this.fluidumContract = new AngularContract(this.fluidumContractMetadata);
+      await this.fluidumContract.init(this.myProvider.Provider, myWallet);
+      this.isChainReady.next({
+        active: true,
+        provider: this.myProvider,
+        wallet: this.newWallet,
+        contract: this.fluidumContract,
+      });
+      this.isbusySubject.next(false);
+    }
   }
 }
