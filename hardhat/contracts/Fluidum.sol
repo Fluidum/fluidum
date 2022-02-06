@@ -44,7 +44,8 @@ contract Fluidum is SuperAppBase {
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
             SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
             SuperAppDefinitions.BEFORE_AGREEMENT_UPDATED_NOOP |
-            SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP;
+            SuperAppDefinitions.BEFORE_AGREEMENT_TERMINATED_NOOP |
+            SuperAppDefinitions.AFTER_AGREEMENT_TERMINATED_NOOP;
 
         _host.registerApp(configWord);
     }
@@ -144,6 +145,19 @@ contract Fluidum is SuperAppBase {
         return _phoneNumbersByUser[addressToCheck] != bytes32(0);
     }
 
+    /**
+     * @notice Checks if phone number is registered
+     *
+     * @param phoneNumberHash phone number to check
+     */
+    function checkRegisteredByPhone(bytes32 phoneNumberHash)
+        public
+        view
+        returns (bool)
+    {
+        return _usersByPhoneNumber[phoneNumberHash] != address(0);
+    }
+
     /**************************************************************************
      * SuperApp callbacks
      *************************************************************************/
@@ -185,13 +199,16 @@ contract Fluidum is SuperAppBase {
     function parseUserData(bytes memory data)
         internal
         pure
-        returns (bytes32, string memory)
+        returns (
+            bytes32 recipientPhoneNumberHash,
+            string memory message,
+            address flowOriginator
+        )
     {
-        (bytes32 recipientPhoneNumberHash, string memory message) = abi.decode(
+        (recipientPhoneNumberHash, message, flowOriginator) = abi.decode(
             data,
-            (bytes32, string)
+            (bytes32, string, address)
         );
-        return (recipientPhoneNumberHash, message);
     }
 
     /// @dev If a new stream is opened, or an existing one is opened
@@ -200,25 +217,25 @@ contract Fluidum is SuperAppBase {
         returns (bytes memory newCtx)
     {
         newCtx = ctx; //update the context with the same logic...
-
         ISuperfluid.Context memory decodedContext = _host.decodeCtx(ctx);
         //uData = decodedContext;
-        bytes32 recipientPhoneNumberHash;
-        string memory textMessage;
-        (recipientPhoneNumberHash, textMessage) = parseUserData(
-            decodedContext.userData
-        );
+        (
+            bytes32 recipientPhoneNumberHash,
+            string memory textMessage,
+            address flowOriginator
+        ) = parseUserData(decodedContext.userData);
         address recipient = _usersByPhoneNumber[recipientPhoneNumberHash];
         require(address(recipient) != address(0), "Receiver is not registered");
         require(!_host.isApp(ISuperApp(recipient)), "Receiver is an app!");
 
         // @dev This will give us the new flowRate, as it is called in after callbacks
         int96 netFlowRate = _cfa.getNetFlow(_acceptedToken, address(this));
-        (, int96 outFlowRate, , ) = _cfa.getFlow(
-            _acceptedToken,
-            address(this),
-            recipient
-        ); // CHECK: unclear what happens if flow doesn't exist.
+        (
+            uint256 timestamp,
+            int96 outFlowRate,
+            uint256 deposit,
+            uint256 owedDeposit
+        ) = _cfa.getFlow(_acceptedToken, address(this), recipient); // CHECK: unclear what happens if flow doesn't exist.
         int96 inFlowRate = netFlowRate + outFlowRate;
 
         // @dev If inFlowRate === 0, then delete existing flow.
