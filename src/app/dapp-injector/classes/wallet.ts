@@ -9,16 +9,15 @@ import { timeStamp } from 'console';
 @Injectable()
 export class AngularWallet {
   _myWallet!: Wallet;
-  private _address!:string;
+  private _address!: string;
   public walletBalanceSubscription: ReplaySubject<any> = new ReplaySubject(1);
   constructor() {}
 
-
   async getAddress() {
     if (this._address === undefined) {
-      this._address = await this._myWallet.getAddress()
+      this._address = await this._myWallet.getAddress();
     }
-    return this._address
+    return this._address;
   }
 
   get wallet() {

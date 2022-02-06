@@ -37,8 +37,6 @@ contract Fluidum is SuperAppBase {
             address(acceptedToken) != address(0),
             "acceptedToken is zero address"
         );
-        //require(address(receiver) != address(0), "receiver is zero address");
-        //require(!host.isApp(ISuperApp(receiver)), "receiver is an app");
         _host = host;
         _cfa = cfa;
         _acceptedToken = acceptedToken;
@@ -83,6 +81,7 @@ contract Fluidum is SuperAppBase {
         });
     }
 
+    //TODO for testing only, delete
     function mockRegistration(address newUserAddress, bytes32 phoneNumberHash)
         public
     {
@@ -145,27 +144,6 @@ contract Fluidum is SuperAppBase {
         return _phoneNumbersByUser[addressToCheck] != bytes32(0);
     }
 
-    // Encodes address to a byte array to be passed on through Superfluid host into our callback
-    function _encodeAddress(address receiverAddress)
-        internal
-        pure
-        returns (bytes memory data)
-    {
-        data = abi.encodePacked(data, receiverAddress);
-    }
-
-    // Recovers address from bytes
-    function _decodeAddress(bytes calldata data)
-        internal
-        pure
-        returns (address receiverAddress)
-    {
-        bytes memory b = data[0:20];
-        assembly {
-            receiverAddress := mload(add(b, 20))
-        }
-    }
-
     /**************************************************************************
      * SuperApp callbacks
      *************************************************************************/
@@ -204,18 +182,42 @@ contract Fluidum is SuperAppBase {
         return _updateOutflow(_ctx);
     }
 
+    function parseUserData(bytes memory data)
+        internal
+        pure
+        returns (bytes32, string memory)
+    {
+        (bytes32 recipientPhoneNumberHash, string memory message) = abi.decode(
+            data,
+            (bytes32, string)
+        );
+        return (recipientPhoneNumberHash, message);
+    }
+
     /// @dev If a new stream is opened, or an existing one is opened
     function _updateOutflow(bytes calldata ctx)
         private
         returns (bytes memory newCtx)
     {
-        newCtx = ctx;
+        newCtx = ctx; //update the context with the same logic...
+
+        ISuperfluid.Context memory decodedContext = _host.decodeCtx(ctx);
+        //uData = decodedContext;
+        bytes32 recipientPhoneNumberHash;
+        string memory textMessage;
+        (recipientPhoneNumberHash, textMessage) = parseUserData(
+            decodedContext.userData
+        );
+        address recipient = _usersByPhoneNumber[recipientPhoneNumberHash];
+        require(address(recipient) != address(0), "Receiver is not registered");
+        require(!_host.isApp(ISuperApp(recipient)), "Receiver is an app!");
+
         // @dev This will give us the new flowRate, as it is called in after callbacks
         int96 netFlowRate = _cfa.getNetFlow(_acceptedToken, address(this));
         (, int96 outFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
-            _decodeAddress(ctx)
+            recipient
         ); // CHECK: unclear what happens if flow doesn't exist.
         int96 inFlowRate = netFlowRate + outFlowRate;
 
@@ -228,7 +230,7 @@ contract Fluidum is SuperAppBase {
                     _cfa.deleteFlow.selector,
                     _acceptedToken,
                     address(this),
-                    _decodeAddress(ctx),
+                    recipient,
                     new bytes(0) // placeholder
                 ),
                 "0x",
@@ -240,7 +242,7 @@ contract Fluidum is SuperAppBase {
                 abi.encodeWithSelector(
                     _cfa.updateFlow.selector,
                     _acceptedToken,
-                    _decodeAddress(ctx),
+                    recipient,
                     inFlowRate,
                     new bytes(0) // placeholder
                 ),
@@ -254,7 +256,7 @@ contract Fluidum is SuperAppBase {
                 abi.encodeWithSelector(
                     _cfa.createFlow.selector,
                     _acceptedToken,
-                    _decodeAddress(ctx),
+                    recipient,
                     inFlowRate,
                     new bytes(0) // placeholder
                 ),
