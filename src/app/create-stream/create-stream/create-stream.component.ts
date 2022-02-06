@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { convertEtherToWei, convertUSDtoEther, NotifierService } from 'angular-web3';
+import { utils } from 'ethers';
 import { Subject } from 'rxjs';
 
 
+import { Framework } from '@superfluid-finance/sdk-core';
 import { OnChainService } from '../../on-chain.service';
 
 @Component({
@@ -81,10 +83,67 @@ export class CreateStreamComponent implements OnInit {
         await this.onChainService.getDollarEther()
       );
       const amountinWei = convertEtherToWei(amountInEther);
-      const flowRate = +amountinWei/this.flowRateCtrl.value;
+      const flowRate = Math.floor(+amountinWei/this.flowRateCtrl.value).toString()
 
+        console.log(flowRate)
+        this.registered = false;
 
+ 
      // console.log(Math.floor(+amountinWei/this.flowRateCtrl.value) )
+     this.onChainService.isbusySubject.next(true);
+     const provider = this.onChainService.myProvider.Provider;
+ 
+     const sf = await Framework.create({
+       networkName: 'mumbai',
+       provider: provider,
+     });
+ 
+     const signer = sf.createSigner({
+       web3Provider: this.onChainService.injectionProvider.provider
+     });
+ 
+     try {
+       const recipient = this.contract.Contract.address
+       ;
+ 
+       console.log(
+         `Hashed phone is ${utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value))}`
+       );
+       const hash = utils.defaultAbiCoder.encode(
+         ['bytes32', 'string'],
+         [utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value)), 'hello!']
+       );
+ 
+       const createFlowOperation = sf.cfaV1.createFlow({
+         flowRate: flowRate,
+         receiver: recipient,
+         superToken: '0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f' ,//environment.mumbaiDAIx,
+         userData: hash,
+       });
+ 
+       console.log('Creating your stream...');
+ 
+       const result = await createFlowOperation.exec(signer);
+       console.log(result);
+ 
+       console.log(
+         `Congrats - you've just created a money stream!
+     View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
+   
+     Sender: ${await this.wallet.getAddress()}
+     Receiver: ${recipient},
+     FlowRate: ${flowRate}
+     `
+       );
+     } catch (error) {
+       console.log(
+         "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
+       );
+       console.error(error);
+     }
+     this.onChainService.isbusySubject.next(false);
+
+
     }
 
   }
