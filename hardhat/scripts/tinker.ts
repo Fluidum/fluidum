@@ -394,7 +394,7 @@ const tinker = async () => {
 
   const passcode = 'aaaaaaa';
   console.log(passcode)
-  const passcodeHash = "0x" + utils.keccak256(passcode)
+  const passcodeHash =  utils.keccak256("passcode")
   const phonenumerHash = utils.keccak256("5555555"); 
   console.log(395)
   console.log(phonenumerHash)
