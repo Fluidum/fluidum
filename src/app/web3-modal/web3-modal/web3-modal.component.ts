@@ -249,7 +249,7 @@ export class Web3ModalComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loadWallets();
-    this.connected = this.injectionProvider.found;
+   // this.connected = this.injectionProvider.found;
   }
 
   async loadWallets() {

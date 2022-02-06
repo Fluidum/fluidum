@@ -26,7 +26,7 @@
               <span class="sr-only">Actions </span>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="startFlow()" 
+              <a class="dropdown-item" routerLink="/dashboard/create-stream" 
                 >Create a stream</a
               >
               <!-- <a class="dropdown-item" href="#">Another action</a>
@@ -50,13 +50,13 @@
               placeholder="Phone Number?"
             />
           </div>
-          <button
+          <!-- <button
             (click)="startFlow()"
             type="button btn-secondary"
             class="btn mt-2"
           >
             Start Stream
-          </button>
+          </button> -->
 
           <button
           [disabled]="phoneNumberCtrl.invalid"
@@ -84,7 +84,7 @@
   "
 >
  <div style="width: 300px;height: 217px;background: white;padding: 20px;">
-  <p>Plase input your the Sms code you received</p>
+  <p>Plase input your the sms code you received</p>
   <div class="form-group">
     <input
       [class.has-error]="codeCtrl.invalid"
@@ -107,7 +107,3 @@
  </div>
 </div>
 
-<web3-modal  
-[injectionProvider]="onChainService.injectionProvider" 
-[network]="'mumbai'"  
-(onDisConnect)="disconnectModal()"  ></web3-modal> 

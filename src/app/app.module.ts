@@ -17,6 +17,7 @@ import { NavigationModule } from './navigation/navigation.module';
 import { CreateStreamModule } from './create-stream/create-stream.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Web3ModalModule } from './web3-modal/web3-modal.module';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { Web3ModalModule } from './web3-modal/web3-modal.module';
     MatProgressSpinnerModule,
   
   ],
-  providers: [  ...blockchain_providers, OnChainService ],
+  providers: [  ...blockchain_providers, OnChainService,AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
