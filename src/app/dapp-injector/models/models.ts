@@ -43,6 +43,7 @@ export interface ITRANSACTION_RESULT {
   success:boolean,
   success_result?:ITRANSACTION_DETAILS,
   error_message?:string
+  success_message?:string;
 
 }
 

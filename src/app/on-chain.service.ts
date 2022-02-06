@@ -9,6 +9,7 @@ import {
 import { Contract, providers } from 'ethers';
 import { ReplaySubject } from 'rxjs';
 import { uniswap_abi } from './uniswap_abi';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class OnChainService {
   myProvider!: AngularNetworkProvider;
   newWallet!: AngularWallet;
   fluidumContract!: AngularContract;
+  public allowedChain: boolean;
   public isChainReady: ReplaySubject<{
     active: boolean;
     wallet?: AngularWallet;
@@ -27,6 +29,7 @@ export class OnChainService {
   public isbusySubject: ReplaySubject<boolean> = new ReplaySubject(1);
   injectionProvider: { provider: providers.Web3Provider; signer: providers.JsonRpcSigner; providerNetwork: providers.Network; found:boolean };
   constructor(
+    private router:Router,
     @Inject('fluidumContractMetadata') public fluidumContractMetadata: ICONTRACT
   ) {}
 
@@ -57,6 +60,12 @@ export class OnChainService {
   async init() {
     let metamaskDeployment = true;
     let localhost = false;
+
+    if (environment.production) {
+      metamaskDeployment = true;
+      localhost = false;
+    }
+
     if (localhost == false) {
       this.myProvider = new AngularNetworkProvider([
         `https://speedy-nodes-nyc.moralis.io/${environment.moralisId}/polygon/mumbai`,
@@ -89,14 +98,16 @@ export class OnChainService {
             wallet: this.newWallet,
             contract: this.fluidumContract,
           });
-
+          this.allowedChain = true
           this.injectionProvider= {provider:provider,signer:signer,providerNetwork,found:true}
-
+          this.router.navigate(['/dashboard]'])
           this.isbusySubject.next(false);
         } else {
           this.isbusySubject.next(false);
+          this.allowedChain = false
         }
       } else {
+        this.allowedChain = false
         this.isbusySubject.next(false);
       }
 

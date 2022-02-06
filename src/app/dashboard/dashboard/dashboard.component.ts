@@ -174,14 +174,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       phoneNumberHash,  { gasLimit: 10000000 }
     ]);
 
-    if (myResult.msg.success == false) {
-      await this.notifierService.showNotificationTransaction(myResult.msg);
-    }
+    // if (myResult.msg.success == false) {
+    //   await this.notifierService.showNotificationTransaction(myResult.msg);
+    // }
 
-    if (myResult.msg.success_result !== undefined) {
-      await this.notifierService.showNotificationTransaction(myResult.msg);
-    }
-    this.onChainService.isbusySubject.next(false);
+    // if (myResult.msg.success_result !== undefined) {
+    //   await this.notifierService.showNotificationTransaction(myResult.msg);
+    // }
+   
   }
   startVerificationCloud(verificationObject: {
     phoneNumber: string;
@@ -208,6 +208,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(async (chain) => {
         this.connected = chain.active;
         this.contract = chain.contract;
+        this.contract.Contract.on('RegistrationSuccessEvent', (args) => {
+          console.log('success')
+          this.notifierService.showNotificationTransaction({success:true,success_message:'Great you are already Onbpoard'})
+          this.onChainService.isbusySubject.next(false);
+          
+        });
+
+        this.contract.Contract.on('RegistrationTimedOutEvent', (args) => {
+          this.notifierService.showNotificationTransaction({success:false,error_message:'Sorry timeout, start onboarding process again'})
+          this.onChainService.isbusySubject.next(false);
+        });
         this.wallet = chain.wallet;
         await this.checkRegistered();
       });
