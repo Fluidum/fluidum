@@ -1,0 +1,70 @@
+
+  .Frame-16-1{
+    position:relative;
+    z-index:16;
+    pointer-events:none;
+    margin-left: 214px;
+    width:262px;
+    min-width:262px;
+    height:63px;
+   
+  
+    min-height:63px;
+    background:linear-gradient(-96.2deg, rgba(255, 255, 255, 1) 48.72777834304246%, rgba(255, 255, 255, 0.30000001192092896) 896.1499178156436%);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    filter:drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius:10px;
+  }
+  .Frame-16-1-outer{
+    pointer-events:none;
+    z-index:16;
+    position:relative;
+    display:flex;
+  }
+  .Connect-Wallet{
+    position:relative;
+    z-index:18;
+    pointer-events:none;
+    margin-left:65px;
+    width:174px;
+    min-width:174px;
+    margin-top:17px;
+    margin-bottom:17px;
+    min-height:29px;
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    color:rgba(0, 0, 0, 1);
+    font-style:normal;
+    font-family:Helvetica Neue;
+    font-weight:700;
+    font-size:24px;
+    line-height:29px;
+  }
+  .Connect-Wallet-outer{
+    pointer-events:none;
+    z-index:18;
+    position:relative;
+    display:flex;
+  }
+  .noun-link-4568748-1{
+    position:relative;
+    z-index:17;
+    pointer-events:none;
+    margin-left:23px;
+    width:32px;
+    min-width:32px;
+    height:27px;
+    margin-top:-46px;
+    margin-bottom:19px;
+    min-height:27px;
+    content:url('/assets/images/noun_link_4568748_1.png');
+  }
+  .noun-link-4568748-1-outer{
+    pointer-events:none;
+    z-index:17;
+    position:relative;
+    display:flex;
+  } 

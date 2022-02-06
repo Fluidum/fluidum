@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 
 import { Framework } from '@superfluid-finance/sdk-core';
 import { OnChainService } from '../../on-chain.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'create-stream',
@@ -39,24 +40,25 @@ export class CreateStreamComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private notifierService: NotifierService,
-    private onChainService: OnChainService
+    private onChainService: OnChainService,
+    private router:Router
   ) {
     
   }
 
   async checkRegistered() {
-    this.registered = true;
-    return 
+    if (this.phoneNumberCtrl.invalid){
+      return
+    }
     this.onChainService.isbusySubject.next(true);
     this.address = await this.wallet.getAddress();
-    const result = await this.contract.runFunction('checkRegistered', [
-      this.address,
-    ]);
+    const phoneHash = utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value))
+ 
     this.registered = await (
-      await this.contract.runFunction('checkRegistered', [this.address])
+      await this.contract.runFunction('checkRegisteredByPhone', [ phoneHash])
     ).payload[0];
     console.log(
-      `Address ${this.address} registration status: ${this.registered}`
+      `phoneNumber ${phoneHash} registration status: ${this.registered}`
     );
     this.onChainService.isbusySubject.next(false);
   }
@@ -135,6 +137,9 @@ export class CreateStreamComponent implements OnInit {
      FlowRate: ${flowRate}
      `
        );
+        this.notifierService.showNotificationTransaction({success:true,success_message:"BRAVO!! Stream Created"})
+        this.router.navigate(['/dashboard'])
+
      } catch (error) {
        console.log(
          "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"

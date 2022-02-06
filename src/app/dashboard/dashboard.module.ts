@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Web3ModalModule } from '../web3-modal/web3-modal.module';
+import { WalletdisplaytModule } from '../dapp-injector/components/wallet/wallet-displau.module';
 
 
 
@@ -15,7 +16,8 @@ import { Web3ModalModule } from '../web3-modal/web3-modal.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,Web3ModalModule
+    RouterModule,Web3ModalModule,
+    WalletdisplaytModule
   ],
   exports: [
     DashboardComponent

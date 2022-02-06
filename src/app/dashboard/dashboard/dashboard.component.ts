@@ -14,7 +14,7 @@ import { OnChainService } from '../../on-chain.service';
 import { Framework } from '@superfluid-finance/sdk-core';
 import { providers } from 'ethers';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Console } from 'console';
+import { Console, timeStamp } from 'console';
 
 @Component({
   selector: 'fluidum-dashboard',
@@ -55,9 +55,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async checkRegistered() {
     this.onChainService.isbusySubject.next(true);
     this.address = await this.wallet.getAddress();
-    const result = await this.contract.runFunction('checkRegistered', [
-      this.address,
-    ]);
+    // const result = await this.contract.runFunction('checkRegistered', [
+    //   this.address,
+    // ]);
     this.registered = await (
       await this.contract.runFunction('checkRegistered', [this.address])
     ).payload[0];
@@ -223,8 +223,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.contract.Contract.on('RegistrationSuccessEvent', (args) => {
           console.log('success')
           this.notifierService.showNotificationTransaction({success:true,success_message:'Great you are already On board'})
+          this.registered = true;
           this.onChainService.isbusySubject.next(false);
-         
+          
         });
 
         this.contract.Contract.on('RegistrationTimedOutEvent', (args) => {

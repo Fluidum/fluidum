@@ -1,22 +1,37 @@
-# Fluidum
+# Fluidium
 
-Fluidum, a Dapp Hackaton project which aims to create the right tool to engage mass adoption of money streaming by providing users the ability to stream money to phone numbers
+Fluidium, a Dapp Hackathon project that aims to create the right tool to engage mass adoption of money streaming by providing users the ability to stream money to phone numbers.
 
-## Major building blocks and challenges
+## Major problems it solves
 
-1. Phone Identification, association with blockchain address
-   - Creation of random password (vrf Chainlink)
-   - Custom chainlink adapter posting to sms provider the random password
-   - Encrypted password validate period 5 minutes
-   - Store address=> phone number on chain
-2. Leverage Superfluid for money transfer
+Currently, dapps are adopted by mainly developers and traders with sufficient blockchain knowledge. If we want to achieve mass adoption, we require that the onboarding step (creating a wallet) is linked with our daily life (phone number). 
 
-   - Stable coin as supertoken
-   - Establishing maximal and minimal accepted deviation of exchange variation
+Current payment apps (Venmo, Bizum) require digital bank app onboarding, a cumbersome and oftentimes several-day registering process that cannot send real-time payment streams.
 
-3. Dapp in Angular frontend with components:
-   - Phone Identificition
-   - Stream into to checkout
+Whether streaming money to a software service, paying for energy use, renting out digital real estate, or simply streaming to a friend, we must make the process as seamless and understandable as possible for the average user.
+
+Fluidium seeks to supercharge the superfluid protocol, introducing non-tech/non-trade newcomers to the benefits of blockchain and payment streams. This is possible by creating wallets on the user's behalf quickly (if they choose to and until they're ready to perform tasks on their own) that are linked to their phone number for wallet verifications and notifications, while also educating them throughout the process. As well, we do not have access to their wallet (seed phrase through zk, etc.), only their credentials and public address.
+## Answering Questions not yet there
+
+The ability to engage with payment streams in daily activities offers a new world of services and collaborations, which we cannot fully imagine quite yet:
+   - Opening a social stream and sharing it in social networks as people plug into the stream
+   - Restaurants offering flat rates menus per minute (premium flat rate/natural flat rate)
+   - Events that run as long as a volume of common stream is running
+   - ...
+
+For each of us though, there is already a question we have to answer in our life... "in which stream do we want to be?" If you are someone who loves to share, who engages with society with the goal to improve lives, then you already are in Fluidium!!!
+
+## Next steps and hackathon decisions
+
+   - For the time being, we only stream with DAI for demonstration purposes. We would obviously expand to include other tokens and allow exchange to stable coins.
+   - We plan to create a small fee (around 1/1000) for every stream to fund the project
+   - Partner with software providers to experiment with pay-per-use functions through SMS notifications/verification
+   - Review the future alternatives to current SMS through cloud function 
+
+   ### use cases
+      - Allow to share stream ID to friends/colleagues who can join the stream.
+      - Create and stream/event/waiting to have a certain volume to quick off (dynamic crowd funding)
+
 
 # 🏄‍♂️ Quick Start
 
