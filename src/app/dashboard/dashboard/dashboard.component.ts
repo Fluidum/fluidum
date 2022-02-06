@@ -25,16 +25,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   registered;
   wallet: AngularWallet;
   contract: AngularContract;
-  phoneNumberCtrl: FormControl = new FormControl('', [
+  phoneNumberCtrl: FormControl = new FormControl('+34683649305', [
     Validators.required,
     Validators.min(100000),
   ]);
+  codeCtrl: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(6), Validators.minLength(6)
+  ]);
   address: string;
   private ngUnsubscribe: Subject<void> = new Subject();
+  showInputCode: boolean;
 
   constructor(
     private notifierService: NotifierService,
-    private onChainService: OnChainService,
+
+    public onChainService: OnChainService,
     private http: HttpClient
   ) {
     // this.phoneNumberCtrl.valueChanges.subscribe(value=> {
@@ -75,6 +81,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     try {
       const recipient = this.contract.Address;
       const flowRate = '3225232222200000';
+
       console.log(
         `Hashed phone is ${utils.keccak256(utils.toUtf8Bytes('886999888777'))}`
       );
@@ -117,36 +124,53 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onChainService.isbusySubject.next(true);
     console.log(this.phoneNumberCtrl.value);
     this.address = await this.wallet.getAddress();
-    const hash = utils.keccak256(this.phoneNumberCtrl.value);
-    console.log(hash);
+
     const myResult = await this.startVerificationCloud({
-      phoneNumberHash: hash,
+      phoneNumber: this.phoneNumberCtrl.value,
+
       control: '20220204',
       address: this.address,
     }).toPromise();
-
-    if (myResult.msg.success == false) {
-      await this.notifierService.showNotificationTransaction(myResult.msg);
-    }
-
-    if (myResult.msg.success_result !== undefined) {
-      await this.notifierService.showNotificationTransaction(myResult.msg);
-    }
+    console.log(myResult)
+  if (myResult.success == true){
     this.onChainService.isbusySubject.next(false);
+    this.showInputCode = true;
+  } else {
+    await this.notifierService.showNotificationTransaction({success:false,error_message:'Oops error connecting the cloud'});
+    this.onChainService.isbusySubject.next(false);
+  }
+  
+
+    // if (myResult.msg.success == false) {
+    //   await this.notifierService.showNotificationTransaction(myResult.msg);
+    // }
+
+    // if (myResult.msg.success_result !== undefined) {
+    //   await this.notifierService.showNotificationTransaction(myResult.msg);
+    // }
+
   }
 
   async createStream() {}
 
   async register() {}
 
+  async disconnectModal(){
+    
+  }
+  
   async finishVerification() {
+    this.showInputCode = false;
     this.onChainService.isbusySubject.next(true);
-    console.log(this.phoneNumberCtrl.value);
+ 
     this.address = await this.wallet.getAddress();
-    const hash = utils.keccak256(this.phoneNumberCtrl.value);
-    const myResult = await this.contract.runFunction('mockRegistration', [
-      this.address,
-      hash,
+
+    console.log(this.phoneNumberCtrl.value)
+    const phoneNumberHash = utils.keccak256(utils.toUtf8Bytes(this.phoneNumberCtrl.value));
+    const myResult = await this.contract.runFunction('finishVerification', [
+      this.codeCtrl.value,
+      phoneNumberHash,  { gasLimit: 10000000 }
+
     ]);
 
     if (myResult.msg.success == false) {
@@ -159,7 +183,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onChainService.isbusySubject.next(false);
   }
   startVerificationCloud(verificationObject: {
-    phoneNumberHash: string;
+
+    phoneNumber: string;
+
     address: string;
     control: string;
   }): Observable<any> {

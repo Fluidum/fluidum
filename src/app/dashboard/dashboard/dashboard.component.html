@@ -44,14 +44,14 @@
             <input
               [class.has-error]="phoneNumberCtrl.invalid"
               [formControl]="phoneNumberCtrl"
-              type="number"
+              type="string"
               class="form-control"
               id="exampleInputPassword1"
               placeholder="Phone Number?"
             />
           </div>
           <button
-            (click)="startVerification()"
+            (click)="startFlow()"
             type="button btn-secondary"
             class="btn mt-2"
           >
@@ -72,3 +72,42 @@
     </div>
   </div>
 </div>
+<div *ngIf="showInputCode"
+  style="
+    z-index: 1000000;
+    background: #00000070;
+    text-align: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;align-items: center;
+    top: 0;display: flex;justify-content: center;
+  "
+>
+ <div style="width: 300px;height: 217px;background: white;padding: 20px;">
+  <p>Plase input your the Sms code you received</p>
+  <div class="form-group">
+    <input
+      [class.has-error]="codeCtrl.invalid"
+      [formControl]="codeCtrl"
+      type="string"
+      class="form-control"
+      id="exampleInputPassword1"
+      placeholder="Phone Number?"
+    />
+  </div>
+  <button
+  [disabled]="codeCtrl.invalid"
+  [class]="codeCtrl.invalid ? 'btn-secondary' : 'btn-success'"
+  (click)="finishVerification()"
+  type="button"
+  class="btn mt-2"
+>
+ Verify
+</button>
+ </div>
+</div>
+
+<web3-modal  
+[injectionProvider]="onChainService.injectionProvider" 
+[network]="'mumbai'"  
+(onDisConnect)="disconnectModal()"  ></web3-modal> 

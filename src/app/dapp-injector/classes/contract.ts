@@ -83,10 +83,13 @@ export class AngularContract implements OnDestroy {
       result_tx.value == undefined
         ? (transaction_details.value = '0')
         : (transaction_details.value = result_tx.value.toString());
-      notification_message.success = true;
-      notification_message.success_result = transaction_details;
-    } catch (e: any) {
-      // console.log(e);
+
+        notification_message.success = true;
+        notification_message.success_result = transaction_details;
+   
+    } catch (e:any) {
+    
+      console.log(e);
       // Accounts for Metamask and default signer on all networks
       let myMessage =
         e.data && e.data.message
