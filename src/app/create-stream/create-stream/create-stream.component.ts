@@ -60,6 +60,13 @@ export class CreateStreamComponent implements OnInit {
     console.log(
       `phoneNumber ${phoneHash} registration status: ${this.registered}`
     );
+    if (this.registered == true) {
+      this.notifierService.showNotificationTransaction({success:true, success_message:"Great this phonnumber is already on Fluidum"})
+    } else {
+      this.notifierService.showNotificationTransaction({success:false, error_message:"Please Inform your friend to do Onboarding"})
+
+    }
+
     this.onChainService.isbusySubject.next(false);
   }
 
@@ -144,7 +151,7 @@ export class CreateStreamComponent implements OnInit {
        console.log(
          "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
        );
-       console.error(error);
+       console.error(JSON.stringify(error));
      }
      this.onChainService.isbusySubject.next(false);
 

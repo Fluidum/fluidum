@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Web3ModalModule } from '../web3-modal/web3-modal.module';
 import { WalletdisplaytModule } from '../dapp-injector/components/wallet/wallet-displau.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -17,7 +18,8 @@ import { WalletdisplaytModule } from '../dapp-injector/components/wallet/wallet-
     FormsModule,
     ReactiveFormsModule,
     RouterModule,Web3ModalModule,
-    WalletdisplaytModule
+    WalletdisplaytModule,
+    MatIconModule
   ],
   exports: [
     DashboardComponent

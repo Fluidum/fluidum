@@ -1,6 +1,8 @@
-<div class="container mt-4">
-  <div class="row justify-content-md-center">
-    <div class="jumbotron bg-light col-12 col-md-10">
+<div  style="position:absolute;z-index:10000" class="container mt-4">
+  <div style="    padding: 50px;
+  margin-top: 20px;
+  z-index: 100000;" class="row justify-content-md-center">
+    <div  style="padding:50px;" class="jumbotron bg-light col-12 col-md-6">
       <h1 class="display-4">Set the Flow</h1>
       <p class="lead">Check your friends</p>
       <hr class="my-4" />
@@ -30,21 +32,22 @@
     </div>
   </div>
 </div>
-<div *ngIf="registered == true"
+<div *ngIf="registered == true" 
   style="
     z-index: 1000000;
     background: #00000070;
     text-align: center;
-    position: fixed;
+    position: fixed;event.stopPropagation();
     width: 100vw;
     height: 100vh;align-items: center;
     top: 0;display: flex;justify-content: center;
   "
 >
-<div  style="    background: white;
+<div  style=" position:relative;   background: white;
 width: 300px;
 height: 300px;
 padding: 10px;" class="mt-4">
+<span (click)="registered = false" style="font-weight:bold;color:red;position:absolute;right:5px; top:5px;">X</span>
   <div class="form-group">
     <p style="margin:10px 0">Please input the amount in us$ you want to stream</p>
       <input
@@ -88,3 +91,4 @@ padding: 10px;" class="mt-4">
   </div>
 </div>
 </div>
+<img  style="top:0px" id="image-7" data-name="image 7" alt="image 7" class="image-7" />
