@@ -11,10 +11,9 @@ import {
 import { utils } from 'ethers';
 import { interval, Observable, Subject, takeUntil } from 'rxjs';
 import { OnChainService } from '../../on-chain.service';
-import { Framework } from '@superfluid-finance/sdk-core';
-import { providers } from 'ethers';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Console, timeStamp } from 'console';
+
 
 @Component({
   selector: 'fluidum-dashboard',
@@ -64,13 +63,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ]);
     this.flows = [];
 
-    console.log();
+
     for (const ele of result.payload[0]) {
     
   
       this.flows.push({ sender: ele[0], receiver: ele[1], message: ele[2] });
     }
-    console.log(this.flows);
+   
     console.log(
       `Address ${this.address} registration status: ${this.registered}`
     );
@@ -102,9 +101,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         message:result.payload[0][0][2]
   
     })
-    console.log(result.payload[0][1])
-    console.log(this.address)
-    console.log(isSender)
+
 //emit value in sequence every 1 second
       const source = interval(500);
       //output: 0,1,2,3,4,5....
@@ -116,14 +113,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.flows[0].value = this.flows[0].deposit + (Math.floor((Date.now()/1000))-this.flows[0].timeStamp)*this.flows[0].timeStamp;
         }
      
-        console.log(val);
-        console.log(this.flows[0])
       })
 
-    console.log(this.flows);
-    console.log(
-      `Address ${this.address} registration status: ${this.registered}`
-    );
 
     this.onChainService.isbusySubject.next(false);
   }
@@ -136,8 +127,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // ]);
 
     const result =  await this.contract.runFunction('checkRegistered', [this.address])
-      console.log(this.contract.Contract.address)
-    console.log(result)
+
 
     this.registered = await result.payload[0];
     console.log(
@@ -146,70 +136,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onChainService.isbusySubject.next(false);
   }
 
-  async startFlow() {
-    this.onChainService.isbusySubject.next(true);
-    const provider = this.onChainService.myProvider.Provider;
 
-    const sf = await Framework.create({
-      networkName: 'mumbai',
-      provider: provider,
-    });
-
-    const signer = sf.createSigner({
-      privateKey: environment.privKey,
-      provider: provider,
-    });
-
-    try {
-      const recipient = this.contract.Contract.address;
-      const flowRate = '3225232222200000';
-
-      console.log(
-        `Hashed phone is ${utils.keccak256(utils.toUtf8Bytes('886999888777'))}`
-      );
-      const userAddress = await this.wallet.getAddress();
-      const hash = utils.defaultAbiCoder.encode(
-        ['bytes32', 'string', 'address'],
-        [
-          utils.keccak256(utils.toUtf8Bytes('886999888777')),
-          'hello!',
-          userAddress,
-        ]
-      );
-
-      const createFlowOperation = sf.cfaV1.createFlow({
-        flowRate: flowRate,
-        receiver: recipient,
-        superToken: environment.mumbaiDAIx,
-        userData: hash,
-      });
-
-      console.log('Creating your stream...');
-
-      const result = await createFlowOperation.exec(signer);
-      console.log(result);
-
-      console.log(
-        `Congrats - you've just created a money stream!
-    View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
-  
-    Sender: ${userAddress}
-    Receiver: ${recipient},
-    FlowRate: ${flowRate}
-    `
-      );
-    } catch (error) {
-      console.log(
-        "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
-      );
-      console.error(error);
-    }
-    this.onChainService.isbusySubject.next(false);
-  }
 
   async startVerification() {
     this.onChainService.isbusySubject.next(true);
-    console.log(this.phoneNumberCtrl.value);
+ 
 
     this.phoneNumber = this.phoneNumberCtrl.value;
 
@@ -221,7 +152,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       control: '20220204',
       address: this.address,
     }).toPromise();
-    console.log(myResult);
+
     if (myResult.success == true) {
       this.onChainService.isbusySubject.next(false);
       this.showInputCode = true;
@@ -254,9 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.address = await this.wallet.getAddress();
 
-    console.log(this.phoneNumberCtrl.value);
-    console.log(this.phoneNumber);
-    console.log(this.codeCtrl.value);
+   
     const phoneNumberHash = utils.keccak256(
       utils.toUtf8Bytes(this.phoneNumber)
     );

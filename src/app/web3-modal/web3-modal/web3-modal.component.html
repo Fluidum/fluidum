@@ -1,4 +1,4 @@
-<button 
+<button style="border:unset;"  (click)="web3modalAction(true)"
 id="Frame-16-1"
 data-name="Frame 16"
 class="Frame-16-1"
@@ -22,7 +22,8 @@ Connect Wallet</div>
 />
 </div>
 </button>
-<mat-slide-toggle
+<a style=""  (click)="web3modalAction(true)"></a>
+<!-- <mat-slide-toggle
 [(ngModel)]="connected"
 (ngModelChange)="web3modalAction($event)"
 class="example-margin"
@@ -30,5 +31,5 @@ class="example-margin"
 [checked]="connected"
 [disabled]="false"
 >
-</mat-slide-toggle>
+</mat-slide-toggle> -->
 

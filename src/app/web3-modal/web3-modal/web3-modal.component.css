@@ -2,7 +2,7 @@
   .Frame-16-1{
     position:relative;
     z-index:16;
-    pointer-events:none;
+  
     margin-left: 214px;
     width:262px;
     min-width:262px;
