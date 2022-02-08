@@ -21,7 +21,8 @@
     "watch-contract": "cd hardhat && node scripts/helpers/watch.js",
     "watch-tinker": "cd hardhat && node scripts/helpers/tinker-watch.js",
     "wire": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/helpers/wire.ts",
-    "tinker": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/tinker.ts"
+    "tinker": "cd hardhat && npx hardhat --tsconfig ./tsconfig.json run ./scripts/tinker.ts",
+    "deploy-firebase":"node utils/build-flow"
   },
   "private": true,
   "dependencies": {

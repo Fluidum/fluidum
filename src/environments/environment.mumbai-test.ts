@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  privKey: '',
-  moralisId: '',
-  mumbaiDAIx: '',
-  cloudUrl:'https://us-central1-fluidum-eth.cloudfunctions.net/fluidumVerify'
+  moralisId:'6e874b0f13667e6fd8583112',//,// 'f3d0e2a1f1f11a4e71750764',
+ privKey:'',//68f95b02e69ace9aea86d543ea256a0fcc0ddd745862d62686fda3d9881003e1'
+ mumbaiDAIx:'',
+ cloudUrl:'https://us-central1-fluidum-eth.cloudfunctions.net/fluidumVerifyMock'
 };
 
 /*

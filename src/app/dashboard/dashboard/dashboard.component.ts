@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   address: string;
   private ngUnsubscribe: Subject<void> = new Subject();
   showInputCode: boolean;
-  phoneNumber: any;
+  phoneNumber: string;
 
   constructor(
     private notifierService: NotifierService,
@@ -144,6 +144,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.phoneNumber = this.phoneNumberCtrl.value;
 
+    if(this.phoneNumber.substring(0,1)!== "+"){
+      this.phoneNumber = "+" + this.phoneNumber;
+    }
+
+    console.log(this.phoneNumber)
+    return
+
     this.address = await this.wallet.getAddress();
 
     const myResult = await this.startVerificationCloud({
@@ -156,6 +163,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (myResult.success == true) {
       this.onChainService.isbusySubject.next(false);
       this.showInputCode = true;
+      console.log(myResult)
     } else {
       await this.notifierService.showNotificationTransaction({
         success: false,
@@ -211,8 +219,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }): Observable<any> {
     // let booking = {uid: queryUid }
 
-    const url =
-      'https://us-central1-fluidum-eth.cloudfunctions.net/fluidumVerify';
+    const url = environment.cloudUrl;
+     // 'https://us-central1-fluidum-eth.cloudfunctions.net/fluidumVerify';
     const body = JSON.parse(JSON.stringify(verificationObject));
     // url changed from this.introUrl
     const httpOptions = {

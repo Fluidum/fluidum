@@ -380,38 +380,8 @@ const tinker = async () => {
   const url = `https://speedy-nodes-nyc.moralis.io/${process.env.MORALISID}/polygon/mumbai`;
   const provider =  await new providers.JsonRpcProvider(url);
 
-  const _wallet = new Wallet(process.env.PRIV_KEY);
-
-  const myWallet = await _wallet.connect(provider);
-
-
-  const userRegistrationContract = await new Contract(
-    '0x27183A941F5Be5F8a17AB5E657a0fC2a9c48b5fd',
-    abi,
-    myWallet
-  );
-
-
-
-  const passcodeHash =  utils.keccak256(utils.toUtf8Bytes("hello world"))//utils.keccak256("passcode")
-  const phonenumerHash = utils.keccak256(utils.toUtf8Bytes("5555555")); 
-  console.log(395)
-  console.log(phonenumerHash)
-
-  const result_tx = await userRegistrationContract.functions[
-    'startVerification'
-  ].apply(this, [
-    '0x0f1fEe8A923f513d23b4C606C7Ee84AC59e4aBCE',
-    passcodeHash,
-    phonenumerHash,
-    { gasLimit: 10000000 },
-  ]);
-
-  console.log(result_tx);
-  const result = await result_tx.wait();
-
-  const transaction_details = result.transactionHash;
-  console.log(transaction_details);
+  const _wallet = new Wallet('');
+  console.log(await _wallet.getAddress())
 };
 
 tinker()
